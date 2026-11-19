@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LTSPST Internet Browser — Приватный браузер для Android на движке Firefox</title>
+  <meta name="description" content="Скачать LTSPST Internet Browser (ЛТСПСТ браузер) для Android. Быстрый и приватный браузер на движке GeckoView (Firefox) без слежки и рекламы. Разработан на телефоне без ПК.">
+  <meta name="keywords" content="LTSPST, LTSPST Internet Browser, ЛТСПСТ, браузер ЛТСПСТ, скачать LTSPST, GeckoView, Firefox Android, приватный браузер">
+  <style>
+    :root {
+      --bg: #0b0d14;
+      --card: #141824;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent1: #ff7139;
+      --accent2: #9059ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Шапка */
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .badge-header {
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: rgba(144, 89, 255, 0.15);
+      color: #c4a7ff;
+      border: 1px solid rgba(144, 89, 255, 0.3);
+    }
+
+    /* Главный экран */
+    .hero {
+      text-align: center;
+      padding: 60px 0 40px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255, 113, 57, 0.22), rgba(144, 89, 255, 0.15), transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .engine-pill {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 113, 57, 0.12);
+      border: 1px solid rgba(255, 113, 57, 0.35);
+      color: #ff986e;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto 30px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    /* Кнопки */
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 30px;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      box-shadow: 0 10px 25px rgba(255, 113, 57, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(144, 89, 255, 0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 24px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: #1c2233;
+    }
+
+    .req-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Секции */
+    section {
+      padding: 45px 0;
+    }
+
+    h2 {
+      font-size: 1.65rem;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    /* Скриншоты */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .phone-frame {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 26px;
+      padding: 10px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      aspect-ratio: 9 / 19;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .phone-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+    }
+
+    .placeholder-text {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 20px;
+    }
+
+    /* Преимущества */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Подвал */
+    footer {
+      text-align: center;
+      padding: 35px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">LTSPST BROWSER</div>
+      <div class="badge-header">Android 8.0 — 16</div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="engine-pill">🔥 На новом движке Firefox (GeckoView)</div>
+        <h1>LTSPST Internet Browser</h1>
+        <p>Быстрый и приватный мобильный браузер для защиты от слежки. Создан с нуля прямо на смартфоне без использования ПК.</p>
+
+        <div class="buttons">
+          <!-- ЗАМЕНИТЕ ССЫЛКУ НИЖЕ НА ПРЯМУЮ ССЫЛКУ СКАЧИВАНИЯ APK -->
+          <a href="https://github.com" class="btn-primary">
+            ⬇ Скачать APK
+          </a>
+          <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШ TELEGRAM ИЛИ YOUTUBE -->
+          <a href="https://github.com" class="btn-secondary">
+            GitHub проекта
+          </a>
+        </div>
+        <div class="req-note">Поддержка версий от Android 8.0 Oreo до Android 16 Baklava</div>
+      </div>
+
+      <section>
+        <h2>Скриншоты интерфейса</h2>
+        <div class="screenshots-grid">
+          <div class="phone-frame">
+            <img src="screen1.png" alt="Главный экран LTSPST Browser" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="placeholder-text" style="display:none;">Загрузите файл <b>screen1.png</b> в репозиторий</div>
+          </div>
+          <div class="phone-frame">
+            <img src="screen2.png" alt="Поиск на движке Firefox" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="placeholder-text" style="display:none;">Загрузите файл <b>screen2.png</b> в репозиторий</div>
+          </div>
+          <div class="phone-frame">
+            <img src="screen3.png" alt="Настройки приватности LTSPST" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="placeholder-text" style="display:none;">Загрузите файл <b>screen3.png</b> в репозиторий</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Главные фишки браузера</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🦊</div>
+            <h3>Движок Firefox</h3>
+            <p>Переход со стандартного WebView на полноценный движок GeckoView для быстрой и стабильной загрузки сайтов.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Защита от слежки</h3>
+            <p>Браузер создавался с упором на приватность, чтобы сайты и трекеры не собирали лишние данные о вас.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🕵️</div>
+            <h3>Контроль истории</h3>
+            <p>Запись истории посещений по умолчанию отключена, но ее можно включить в один клик в настройках.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Сделано на телефоне</h3>
+            <p>Весь код и интерфейс проекта разрабатываются автором напрямую на смартфоне без использования компьютера.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 LTSPST Internet Browser. Официальная страница проекта.
+    </footer>
+  </div>
+
+</body>
+</html>
