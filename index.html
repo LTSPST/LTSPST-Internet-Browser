@@ -34,12 +34,11 @@
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 18px;
     }
 
-    /* Шапка */
     header {
-      padding: 20px 0;
+      padding: 18px 0;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -47,7 +46,7 @@
     }
 
     .logo {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 800;
       letter-spacing: 0.5px;
       background: linear-gradient(90deg, var(--accent1), var(--accent2));
@@ -64,21 +63,20 @@
       border: 1px solid rgba(144, 89, 255, 0.3);
     }
 
-    /* Главный экран */
     .hero {
       text-align: center;
-      padding: 60px 0 40px;
+      padding: 50px 0 30px;
       position: relative;
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      top: 20px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 280px;
-      height: 280px;
+      width: 260px;
+      height: 260px;
       background: radial-gradient(circle, rgba(255, 113, 57, 0.22), rgba(144, 89, 255, 0.15), transparent 70%);
       z-index: -1;
       pointer-events: none;
@@ -93,37 +91,36 @@
       color: #ff986e;
       font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 6vw, 3.4rem);
-      font-weight: 900;
-      line-height: 1.15;
       margin-bottom: 16px;
     }
 
-    .hero p {
-      max-width: 620px;
-      margin: 0 auto 30px;
-      color: var(--muted);
-      font-size: 1.05rem;
+    h1 {
+      font-size: clamp(1.9rem, 6vw, 3.3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 14px;
     }
 
-    /* Кнопки */
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto 26px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
     .buttons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 14px;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 15px 30px;
+      padding: 14px 28px;
       border-radius: 14px;
       font-size: 1.05rem;
       font-weight: 700;
@@ -131,18 +128,12 @@
       text-decoration: none;
       background: linear-gradient(135deg, var(--accent1), var(--accent2));
       box-shadow: 0 10px 25px rgba(255, 113, 57, 0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(144, 89, 255, 0.4);
     }
 
     .btn-secondary {
       display: inline-flex;
       align-items: center;
-      padding: 15px 24px;
+      padding: 14px 22px;
       border-radius: 14px;
       font-size: 1rem;
       font-weight: 600;
@@ -150,11 +141,6 @@
       text-decoration: none;
       background: var(--card);
       border: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-
-    .btn-secondary:hover {
-      background: #1c2233;
     }
 
     .req-note {
@@ -162,90 +148,116 @@
       color: var(--muted);
     }
 
-    /* Секции */
     section {
-      padding: 45px 0;
+      padding: 36px 0;
     }
 
     h2 {
-      font-size: 1.65rem;
-      margin-bottom: 24px;
+      font-size: 1.55rem;
+      margin-bottom: 6px;
       text-align: center;
     }
 
-    /* Скриншоты */
-    .screenshots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+    .swipe-hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    /* Строго одна горизонтальная строчка с прокруткой */
+    .screenshots-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 2px 14px;
+    }
+
+    .screenshots-row::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .screenshots-row::-webkit-scrollbar-thumb {
+      background: rgba(144, 89, 255, 0.5);
+      border-radius: 10px;
+    }
+
+    @media (min-width: 760px) {
+      .screenshots-row {
+        justify-content: center;
+      }
     }
 
     .phone-frame {
+      flex: 0 0 190px;
+      width: 190px;
+      scroll-snap-align: start;
       background: var(--card);
       border: 2px solid var(--border);
-      border-radius: 26px;
-      padding: 10px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      border-radius: 22px;
+      padding: 7px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
       aspect-ratio: 9 / 19;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      position: relative;
     }
 
     .phone-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 18px;
+      border-radius: 16px;
       display: block;
     }
 
     .placeholder-text {
       text-align: center;
       color: var(--muted);
-      font-size: 0.9rem;
-      padding: 20px;
+      font-size: 0.8rem;
+      padding: 12px;
     }
 
-    /* Преимущества */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
     }
 
     .feature-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 24px;
+      padding: 22px;
     }
 
     .feature-icon {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
+      font-size: 1.7rem;
+      margin-bottom: 10px;
     }
 
     .feature-card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 8px;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
     }
 
     .feature-card p {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
-    /* Подвал */
     footer {
       text-align: center;
-      padding: 35px 0;
+      padding: 30px 0;
       border-top: 1px solid var(--border);
       color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 30px;
+      font-size: 0.88rem;
+      margin-top: 24px;
     }
   </style>
 </head>
@@ -264,11 +276,9 @@
         <p>Быстрый и приватный мобильный браузер для защиты от слежки. Создан с нуля прямо на смартфоне без использования ПК.</p>
 
         <div class="buttons">
-          <!-- ЗАМЕНИТЕ ССЫЛКУ НИЖЕ НА ПРЯМУЮ ССЫЛКУ СКАЧИВАНИЯ APK -->
           <a href="https://github.com" class="btn-primary">
             ⬇ Скачать APK
           </a>
-          <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШ TELEGRAM ИЛИ YOUTUBE -->
           <a href="https://github.com" class="btn-secondary">
             GitHub проекта
           </a>
@@ -278,7 +288,8 @@
 
       <section>
         <h2>Скриншоты интерфейса</h2>
-        <div class="screenshots-grid">
+        <div class="swipe-hint">Листайте вбок, чтобы посмотреть все экраны →</div>
+        <div class="screenshots-row">
           <div class="phone-frame">
             <img src="screen1.png" alt="Главный экран LTSPST Browser" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="placeholder-text" style="display:none;">Загрузите файл <b>screen1.png</b> в репозиторий</div>
