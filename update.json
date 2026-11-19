@@ -1,5 +1,6 @@
+
 {
-  "latest_version": "1.1.19.2_beta",
-  "apk_url": "https://github.com/LTSPST/LTSPST-Internet-Browser/releases/download/1.1.19.2_beta/Internet_Browser.1.1.19.2_beta.apk",
-  "changelog": "• Переход на движок GeckoView для единообразного отображения сайтов\n• Исправлена проблема с микроскопическим шрифтом\n• Оптимизирована работа браузера"
+  "latest_version": "1.1.19.10_beta",
+  "apk_url": "https://github.com/LTSPST/LTSPST-Internet-Browser/releases/download/1.1.19.10_beta/Internet.Browser.1.1.19.10_beta.apk",
+  "changelog": "• Добавлены новые функции браузера\n• Исправлены обнаруженные ошибки\n• Улучшена стабильность работы\n• Оптимизирована производительность\n• Улучшена работа интерфейса"
 }
