@@ -5,10 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LTSPST Internet Browser — приватный браузер для Android</title>
-
-<meta name="description" content="LTSPST Internet Browser — приватный браузер для Android на базе GeckoView. Блокировка рекламы и настройки конфиденциальности.">
-<meta name="keywords" content="LTSPST, LTSPST Internet Browser, Android браузер, приватный браузер, GeckoView">
+<title>LTSPST Internet Browser</title>
+<meta name="description" content="LTSPST Internet Browser — приватный браузер для Android на базе GeckoView.">
 <meta name="author" content="LTSPST">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#071329">
@@ -25,11 +23,11 @@
 <style>
 :root {
     --bg: #071329;
-    --panel: #0d1e39;
+    --panel: #102541;
     --blue: #168bff;
     --cyan: #42c6ff;
     --text: #f2f7ff;
-    --muted: #9eb3d1;
+    --muted: #a6bad5;
 }
 
 * {
@@ -45,11 +43,51 @@ html {
 body {
     font-family: Arial, Helvetica, sans-serif;
     background:
-        radial-gradient(ellipse at 50% -15%, #174b82 0%, transparent 48%),
+        radial-gradient(ellipse at 50% 25%, #123e72 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 65%, #102c55 0%, transparent 50%),
         var(--bg);
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
+}
+
+/* ТЕХНОЛОГИЧЕСКАЯ СЕТКА ФОНА */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(65, 160, 255, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(65, 160, 255, .055) 1px, transparent 1px);
+    background-size: 35px 35px;
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.8),
+        rgba(0,0,0,.45) 65%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.8),
+        rgba(0,0,0,.45) 65%,
+        transparent
+    );
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at 50% 40%,
+        transparent 10%,
+        rgba(1, 8, 22, .35) 100%
+    );
 }
 
 a {
@@ -68,8 +106,8 @@ header {
     position: sticky;
     top: 0;
     z-index: 10;
-    border-bottom: 1px solid #ffffff12;
-    background: #071329dc;
+    border-bottom: 1px solid #ffffff16;
+    background: rgba(7, 19, 41, .88);
     backdrop-filter: blur(18px);
 }
 
@@ -124,20 +162,6 @@ header {
     pointer-events: none;
 }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    background: #633dff;
-    filter: blur(150px);
-    opacity: .12;
-    border-radius: 50%;
-    bottom: -250px;
-    right: -100px;
-    pointer-events: none;
-}
-
 .hero-content {
     position: relative;
     z-index: 1;
@@ -148,13 +172,13 @@ header {
     align-items: center;
     gap: 9px;
     padding: 8px 17px;
-    border: 1px solid #319cff55;
-    background: #168bff17;
+    border: 1px solid #319cff66;
+    background: #168bff20;
     color: #80caff;
     border-radius: 50px;
     font-size: 13px;
     margin-bottom: 25px;
-    box-shadow: 0 0 25px #168bff13;
+    box-shadow: 0 0 25px #168bff20;
 }
 
 .tag::before {
@@ -252,52 +276,88 @@ section {
     font-size: 15px;
 }
 
-/* FEATURES */
+/* ВОЗМОЖНОСТИ — КАРТОЧКИ 2 × 2 */
 
 .features {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
+    align-items: stretch;
 }
 
 .feature {
+    position: relative;
+    min-height: 245px;
     padding: 27px;
-    min-height: 205px;
-    border: 1px solid #24476d;
-    border-radius: 22px;
-    background: linear-gradient(145deg, #122b4b, #0a1a31);
-    transition: .25s;
+    overflow: hidden;
+    border: 1px solid rgba(90, 174, 255, .35);
+    border-radius: 27px;
+    background:
+        linear-gradient(145deg,
+            rgba(26, 65, 111, .83),
+            rgba(10, 27, 52, .93));
+    box-shadow:
+        inset 0 0 25px rgba(40, 135, 255, .055),
+        0 8px 30px rgba(0, 0, 0, .12);
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.feature::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -90px;
+    top: -100px;
+    border-radius: 50%;
+    background: #168bff;
+    filter: blur(75px);
+    opacity: .18;
+    pointer-events: none;
 }
 
 .feature:hover {
-    transform: translateY(-6px);
-    border-color: #299dff;
-    box-shadow: 0 12px 35px #007bff19;
+    transform: translateY(-5px);
+    border-color: #51c6ff;
+    box-shadow:
+        0 0 20px rgba(30, 148, 255, .16),
+        inset 0 0 25px rgba(40, 135, 255, .09);
 }
 
 .feature-icon {
-    width: 49px;
-    height: 49px;
+    position: relative;
+    width: 67px;
+    height: 67px;
     display: grid;
     place-items: center;
-    font-size: 25px;
-    border-radius: 14px;
-    background: #168bff1d;
-    border: 1px solid #168bff35;
-    margin-bottom: 19px;
+    font-size: 32px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #16477a, #102d51);
+    border: 1px solid #268ce5;
+    box-shadow:
+        0 0 20px rgba(22, 139, 255, .16),
+        inset 0 0 15px rgba(22, 139, 255, .12);
+    margin-bottom: 24px;
 }
 
 .feature h3 {
+    position: relative;
     font-size: 19px;
-    margin-bottom: 10px;
+    line-height: 1.4;
+    margin-bottom: 13px;
 }
 
 .feature p {
-    font-size: 14px;
-    color: #a9bdd7;
+    position: relative;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #afc4df;
 }
 
-/* PRIVACY */
+/* ПРИВАТНОСТЬ */
 
 .privacy-list {
     max-width: 760px;
@@ -312,26 +372,27 @@ section {
     align-items: center;
     gap: 17px;
     padding: 19px 21px;
-    border: 1px solid #24476d;
-    border-radius: 15px;
+    border: 1px solid #2b5680;
+    border-radius: 18px;
     background: linear-gradient(110deg, #122b4b, #0b1b32);
     transition: .2s;
 }
 
 .privacy-item:hover {
     border-color: #299dff;
-    transform: translateX(4px);
+    box-shadow: 0 0 20px #168bff17;
 }
 
 .privacy-icon {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
     display: grid;
     place-items: center;
-    border-radius: 13px;
+    border-radius: 15px;
     background: #168bff20;
-    font-size: 22px;
+    border: 1px solid #168bff35;
+    font-size: 23px;
 }
 
 .privacy-text {
@@ -368,7 +429,7 @@ section {
     border: 1px solid #8295ae40;
 }
 
-/* SCREENSHOTS */
+/* СКРИНШОТЫ */
 
 .screenshot-track {
     display: flex;
@@ -427,16 +488,18 @@ section {
     margin-top: 12px;
 }
 
-/* UPDATES */
+/* ОБНОВЛЕНИЯ */
 
 .updates {
     max-width: 850px;
     margin: auto;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 25px;
     background: linear-gradient(145deg, #122b4b, #0b1b32);
     border: 1px solid #2b5881;
-    box-shadow: 0 15px 45px #00000020;
+    box-shadow:
+        0 15px 45px #00000020,
+        inset 0 0 25px #168bff08;
 }
 
 .update-top {
@@ -450,22 +513,22 @@ section {
 
 .update-label {
     font-weight: 800;
-    font-size: 18px;
+    font-size: 21px;
 }
 
 .update-version {
-    padding: 6px 12px;
+    padding: 7px 15px;
     border-radius: 30px;
     background: #168bff20;
     border: 1px solid #168bff50;
     color: #72c1ff;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
 }
 
 .changelog {
     color: #c1d2e7;
-    font-size: 14px;
+    font-size: 15px;
     white-space: pre-line;
     overflow-wrap: anywhere;
 }
@@ -474,7 +537,7 @@ section {
     color: var(--muted);
 }
 
-/* REQUIREMENTS */
+/* СИСТЕМНЫЕ ТРЕБОВАНИЯ */
 
 .requirements {
     max-width: 700px;
@@ -486,23 +549,24 @@ section {
 
 .requirement {
     padding: 22px;
-    border-radius: 18px;
-    background: #102541;
-    border: 1px solid #24476d;
+    border-radius: 20px;
+    background: linear-gradient(110deg, #122b4b, #0b1b32);
+    border: 1px solid #2b5680;
     color: #c4d7ec;
     font-size: 16px;
+    box-shadow: inset 0 0 18px #168bff08;
 }
 
 /* FOOTER */
 
 footer {
     margin-top: 30px;
-    border-top: 1px solid #ffffff12;
+    border-top: 1px solid #ffffff16;
     padding: 28px 0;
     text-align: center;
     color: #86a1c1;
     font-size: 14px;
-    background: #061124;
+    background: rgba(6, 17, 36, .75);
 }
 
 footer a {
@@ -515,7 +579,7 @@ footer a:hover {
     color: white;
 }
 
-/* MOBILE */
+/* МОБИЛЬНАЯ ВЕРСИЯ */
 
 @media (max-width: 600px) {
 
@@ -536,20 +600,31 @@ footer a:hover {
     }
 
     .features {
-        gap: 11px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
     }
 
     .feature {
-        padding: 19px 15px;
-        min-height: 190px;
+        min-height: 265px;
+        padding: 20px 17px;
+        border-radius: 23px;
+    }
+
+    .feature-icon {
+        width: 57px;
+        height: 57px;
+        font-size: 27px;
+        margin-bottom: 20px;
+        border-radius: 17px;
     }
 
     .feature h3 {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .feature p {
-        font-size: 12px;
+        font-size: 13px;
+        line-height: 1.65;
     }
 
     .screenshot-frame {
@@ -593,12 +668,34 @@ footer a:hover {
 }
 
 @media (max-width: 360px) {
+
+    .feature {
+        padding: 16px 13px;
+    }
+
+    .feature h3 {
+        font-size: 14px;
+    }
+
+    .feature p {
+        font-size: 12px;
+    }
+
     .privacy-item {
         flex-wrap: wrap;
     }
 
     .privacy-text {
         min-width: 150px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
     }
 }
 </style>
@@ -730,45 +827,37 @@ footer a:hover {
 
             <div class="privacy-item">
                 <div class="privacy-icon">🕘</div>
-
                 <div class="privacy-text">
                     <h3>История</h3>
                     <p>Сохранение истории отключено по умолчанию.</p>
                 </div>
-
                 <span class="status status-off">Выключено</span>
             </div>
 
             <div class="privacy-item">
                 <div class="privacy-icon">🚫</div>
-
                 <div class="privacy-text">
                     <h3>Блокировка рекламы</h3>
                     <p>Блокировка рекламы включена по умолчанию.</p>
                 </div>
-
                 <span class="status status-on">Включено</span>
             </div>
 
             <div class="privacy-item">
                 <div class="privacy-icon">🍪</div>
-
                 <div class="privacy-text">
                     <h3>Cookies</h3>
                     <p>Cookies отключены по умолчанию.</p>
                 </div>
-
                 <span class="status status-off">Выключено</span>
             </div>
 
             <div class="privacy-item">
                 <div class="privacy-icon">🔑</div>
-
                 <div class="privacy-text">
                     <h3>Сохранение паролей</h3>
                     <p>Сохранение паролей отключено по умолчанию.</p>
                 </div>
-
                 <span class="status status-off">Выключено</span>
             </div>
 
@@ -793,21 +882,21 @@ footer a:hover {
             <div class="screenshot-frame">
                 <img class="screenshot"
                      src="screen1.png"
-                     alt="Главный экран LTSPST Internet Browser"
+                     alt="Главный экран браузера"
                      loading="lazy">
             </div>
 
             <div class="screenshot-frame">
                 <img class="screenshot"
                      src="screen2.png"
-                     alt="Интерфейс LTSPST Internet Browser"
+                     alt="Интерфейс браузера"
                      loading="lazy">
             </div>
 
             <div class="screenshot-frame">
                 <img class="screenshot"
                      src="screen3.png"
-                     alt="Настройки LTSPST Internet Browser"
+                     alt="Настройки браузера"
                      loading="lazy">
             </div>
 
