@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>LTSPST Internet Browser — приватный браузер для Android</title>
-<meta name="description" content="LTSPST Internet Browser — браузер для Android на базе GeckoView. Блокировка рекламы и настройки конфиденциальности.">
+
+<meta name="description" content="LTSPST Internet Browser — приватный браузер для Android на базе GeckoView. Блокировка рекламы и настройки конфиденциальности.">
 <meta name="keywords" content="LTSPST, LTSPST Internet Browser, Android браузер, приватный браузер, GeckoView">
 <meta name="author" content="LTSPST">
 <meta name="robots" content="index, follow">
@@ -255,15 +256,15 @@ section {
 
 .features {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 18px;
 }
 
 .feature {
-    padding: 25px 21px;
-    min-height: 200px;
+    padding: 27px;
+    min-height: 205px;
     border: 1px solid #24476d;
-    border-radius: 18px;
+    border-radius: 22px;
     background: linear-gradient(145deg, #122b4b, #0a1a31);
     transition: .25s;
 }
@@ -275,24 +276,24 @@ section {
 }
 
 .feature-icon {
-    width: 48px;
-    height: 48px;
+    width: 49px;
+    height: 49px;
     display: grid;
     place-items: center;
-    font-size: 24px;
+    font-size: 25px;
     border-radius: 14px;
     background: #168bff1d;
     border: 1px solid #168bff35;
-    margin-bottom: 17px;
+    margin-bottom: 19px;
 }
 
 .feature h3 {
-    font-size: 17px;
-    margin-bottom: 8px;
+    font-size: 19px;
+    margin-bottom: 10px;
 }
 
 .feature p {
-    font-size: 13px;
+    font-size: 14px;
     color: #a9bdd7;
 }
 
@@ -478,18 +479,18 @@ section {
 .requirements {
     max-width: 700px;
     margin: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 13px;
 }
 
 .requirement {
-    padding: 18px;
-    border-radius: 13px;
+    padding: 22px;
+    border-radius: 18px;
     background: #102541;
     border: 1px solid #24476d;
     color: #c4d7ec;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* FOOTER */
@@ -516,13 +517,8 @@ footer a:hover {
 
 /* MOBILE */
 
-@media (max-width: 850px) {
-    .features {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
 @media (max-width: 600px) {
+
     .hero {
         padding: 75px 0 65px;
     }
@@ -540,13 +536,12 @@ footer a:hover {
     }
 
     .features {
-        grid-template-columns: 1fr 1fr;
         gap: 11px;
     }
 
     .feature {
         padding: 19px 15px;
-        min-height: 185px;
+        min-height: 190px;
     }
 
     .feature h3 {
@@ -579,8 +574,8 @@ footer a:hover {
         padding: 4px 8px;
     }
 
-    .requirements {
-        grid-template-columns: 1fr;
+    .requirement {
+        padding: 19px;
     }
 
     .updates {
@@ -594,6 +589,16 @@ footer a:hover {
     .buttons {
         max-width: 330px;
         margin: auto;
+    }
+}
+
+@media (max-width: 360px) {
+    .privacy-item {
+        flex-wrap: wrap;
+    }
+
+    .privacy-text {
+        min-width: 150px;
     }
 }
 </style>
@@ -709,7 +714,7 @@ footer a:hover {
     </div>
 </section>
 
-<!-- ПРИВАТНОСТЬ: СТРОГО ОДИН СТОЛБИК -->
+<!-- ПРИВАТНОСТЬ -->
 
 <section>
     <div class="container">
@@ -725,37 +730,45 @@ footer a:hover {
 
             <div class="privacy-item">
                 <div class="privacy-icon">🕘</div>
+
                 <div class="privacy-text">
                     <h3>История</h3>
                     <p>Сохранение истории отключено по умолчанию.</p>
                 </div>
+
                 <span class="status status-off">Выключено</span>
             </div>
 
             <div class="privacy-item">
                 <div class="privacy-icon">🚫</div>
+
                 <div class="privacy-text">
                     <h3>Блокировка рекламы</h3>
                     <p>Блокировка рекламы включена по умолчанию.</p>
                 </div>
+
                 <span class="status status-on">Включено</span>
             </div>
 
             <div class="privacy-item">
                 <div class="privacy-icon">🍪</div>
+
                 <div class="privacy-text">
                     <h3>Cookies</h3>
                     <p>Cookies отключены по умолчанию.</p>
                 </div>
+
                 <span class="status status-off">Выключено</span>
             </div>
 
             <div class="privacy-item">
                 <div class="privacy-icon">🔑</div>
+
                 <div class="privacy-text">
                     <h3>Сохранение паролей</h3>
                     <p>Сохранение паролей отключено по умолчанию.</p>
                 </div>
+
                 <span class="status status-off">Выключено</span>
             </div>
 
@@ -763,7 +776,7 @@ footer a:hover {
     </div>
 </section>
 
-<!-- СКРИНШОТЫ: ГОРИЗОНТАЛЬНАЯ ЛЕНТА -->
+<!-- СКРИНШОТЫ -->
 
 <section>
     <div class="container">
@@ -814,9 +827,6 @@ footer a:hover {
 
         <div class="section-heading">
             <h2 class="section-title">Последние изменения</h2>
-            <p class="section-description">
-                Информация автоматически загружается из update.json
-            </p>
         </div>
 
         <div class="updates">
@@ -850,24 +860,30 @@ footer a:hover {
         </div>
 
         <div class="requirements">
-            <div class="requirement">📱 Android</div>
-            <div class="requirement">⚙️ Android 8.0 Oreo или новее</div>
-            <div class="requirement">🌐 GeckoView</div>
-            <div class="requirement">💙 Проект LTSPST</div>
-        </div>
 
+            <div class="requirement">📱 Android</div>
+
+            <div class="requirement">
+                ⚙️ Android 8.0 Oreo или новее
+            </div>
+
+            <div class="requirement">🌐 GeckoView</div>
+
+        </div>
     </div>
 </section>
 
 </main>
 
+<!-- FOOTER -->
+
 <footer>
     <div class="container">
+        © LTSPST |
         <a href="https://ltspst.github.io"
            target="_blank"
-           rel="noopener noreferrer">
-            Проект LTSPST
-        </a>
+           rel="noopener noreferrer">Проект LTSPST</a>
+        | 2026 год
     </div>
 </footer>
 
@@ -910,7 +926,7 @@ async function loadUpdates() {
         changelog.classList.remove("loading");
 
     } catch (error) {
-        console.error("Ошибка загрузки обновления:", error);
+        console.error("Ошибка обновления:", error);
 
         version.textContent = "Обновления недоступны";
 
