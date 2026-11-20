@@ -2,287 +2,476 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LTSPST Internet Browser — приватный браузер для Android</title>
+<title>LTSPST Internet Browser — приватный браузер для Android</title>
 
-    <!-- SEO -->
-    <meta name="description" content="LTSPST Internet Browser — приватный браузер для Android на базе GeckoView. Блокировка рекламы, настройки конфиденциальности и удобный интерфейс.">
-    <meta name="keywords" content="LTSPST, LTSPST Internet Browser, браузер Android, приватный браузер, GeckoView, блокировка рекламы">
-    <meta name="author" content="LTSPST">
-    <meta name="robots" content="index, follow">
-    <meta name="application-name" content="LTSPST Internet Browser">
+<meta name="description" content="LTSPST Internet Browser — браузер для Android с GeckoView, блокировкой рекламы и настройками конфиденциальности.">
+<meta name="keywords" content="LTSPST, LTSPST Internet Browser, браузер Android, приватный браузер, GeckoView">
+<meta name="author" content="LTSPST">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#071329">
+<link rel="canonical" href="https://ltspst.github.io/LTSPST-Internet-Browser/">
 
-    <link rel="canonical" href="https://ltspst.github.io/LTSPST-Internet-Browser/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LTSPST Internet Browser">
+<meta property="og:description" content="Приватный браузер для Android от LTSPST.">
+<meta property="og:url" content="https://ltspst.github.io/LTSPST-Internet-Browser/">
+<meta property="og:site_name" content="LTSPST">
+<meta property="og:locale" content="ru_RU">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="LTSPST Internet Browser">
-    <meta property="og:description" content="Приватный браузер для Android от LTSPST.">
-    <meta property="og:url" content="https://ltspst.github.io/LTSPST-Internet-Browser/">
-    <meta property="og:site_name" content="LTSPST">
-    <meta property="og:locale" content="ru_RU">
+<style>
+:root {
+    --bg: #071329;
+    --panel: #0d1e39;
+    --blue: #168bff;
+    --cyan: #42c6ff;
+    --text: #f2f7ff;
+    --muted: #9eb3d1;
+}
 
-    <meta name="theme-color" content="#071426">
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(ellipse at 50% -20%, #123e70 0%, transparent 50%),
+        var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #071426;
-            color: #eef5ff;
-            line-height: 1.6;
-        }
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+.container {
+    width: min(1120px, 91%);
+    margin: auto;
+}
 
-        .container {
-            width: min(1100px, 92%);
-            margin: auto;
-        }
+/* HEADER */
 
-        header {
-            padding: 22px 0;
-            border-bottom: 1px solid #183453;
-            background: rgba(7, 20, 38, 0.95);
-        }
+header {
+    position: relative;
+    z-index: 5;
+    border-bottom: 1px solid #ffffff12;
+    background: #071329d9;
+    backdrop-filter: blur(18px);
+}
 
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
+.nav {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .logo {
-            font-size: 21px;
-            font-weight: 800;
-            color: #ffffff;
-        }
+.logo {
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: -.5px;
+}
 
-        .logo span {
-            color: #42a5ff;
-        }
+.logo span {
+    color: var(--cyan);
+}
 
-        .github-link {
-            color: #b8cce4;
-            font-size: 14px;
-        }
+.github-link {
+    color: #c1d7f2;
+    font-size: 14px;
+    transition: .2s;
+}
 
-        .hero {
-            padding: 90px 0 75px;
-            text-align: center;
-            background:
-                radial-gradient(ellipse at top, #123b68 0%, transparent 65%);
-        }
+.github-link:hover {
+    color: var(--cyan);
+}
 
-        .tag {
-            display: inline-block;
-            padding: 7px 15px;
-            border: 1px solid #2468a5;
-            border-radius: 30px;
-            color: #75bdff;
-            font-size: 13px;
-            margin-bottom: 22px;
-            background: #102b49;
-        }
+/* HERO */
 
-        h1 {
-            font-size: clamp(32px, 6vw, 55px);
-            line-height: 1.15;
-            margin-bottom: 20px;
-        }
+.hero {
+    position: relative;
+    padding: 105px 0 100px;
+    text-align: center;
+    overflow: hidden;
+}
 
-        h1 span {
-            color: #48aaff;
-        }
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 550px;
+    height: 550px;
+    background: #087bff;
+    filter: blur(170px);
+    opacity: .18;
+    border-radius: 50%;
+    top: -280px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
 
-        .hero-description {
-            max-width: 650px;
-            margin: 0 auto 30px;
-            color: #b5c7dc;
-            font-size: 17px;
-        }
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 13px;
-        }
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 17px;
+    border: 1px solid #319cff55;
+    background: #168bff17;
+    color: #80caff;
+    border-radius: 50px;
+    font-size: 13px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 25px #168bff13;
+}
 
-        .button {
-            display: inline-block;
-            padding: 13px 25px;
-            border-radius: 10px;
-            font-weight: 700;
-            transition: 0.2s;
-        }
+.tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #42c6ff;
+    box-shadow: 0 0 10px #42c6ff;
+}
 
-        .button-primary {
-            background: #1688ed;
-            color: white;
-            box-shadow: 0 5px 25px #0878db44;
-        }
+h1 {
+    font-size: clamp(35px, 7vw, 65px);
+    line-height: 1.12;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+}
 
-        .button-primary:hover {
-            background: #39a1ff;
-            transform: translateY(-2px);
-        }
+h1 span {
+    display: block;
+    background: linear-gradient(90deg, #168bff, #53d5ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 
-        .button-secondary {
-            border: 1px solid #315579;
-            color: #d8eaff;
-            background: #10243c;
-        }
+.hero-description {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    color: var(--muted);
+    font-size: 17px;
+}
 
-        .button-secondary:hover {
-            background: #193a5d;
-        }
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
 
-        section {
-            padding: 65px 0;
-        }
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 25px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 800;
+    transition: .25s;
+}
 
-        .section-title {
-            font-size: 29px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
+.button-primary {
+    color: white;
+    background: linear-gradient(110deg, #0879ed, #20b5ff);
+    box-shadow: 0 8px 30px #087bff45;
+}
 
-        .section-description {
-            text-align: center;
-            color: #9eb3cc;
-            margin-bottom: 35px;
-        }
+.button-primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px #087bff70;
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-        }
+.button-secondary {
+    color: #d8eaff;
+    border: 1px solid #3a638c;
+    background: #102541;
+}
 
-        .feature {
-            background: #0d2138;
-            border: 1px solid #1b3b5c;
-            border-radius: 14px;
-            padding: 23px;
-        }
+.button-secondary:hover {
+    transform: translateY(-3px);
+    background: #173657;
+}
 
-        .feature-icon {
-            font-size: 27px;
-            margin-bottom: 12px;
-        }
+/* SECTIONS */
 
-        .feature h3 {
-            margin-bottom: 8px;
-            font-size: 18px;
-        }
+section {
+    padding: 75px 0;
+}
 
-        .feature p {
-            color: #a9bdd3;
-            font-size: 14px;
-        }
+.section-heading {
+    text-align: center;
+    margin-bottom: 42px;
+}
 
-        .screenshots {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            align-items: start;
-        }
+.section-title {
+    font-size: clamp(26px, 4vw, 35px);
+    font-weight: 900;
+    letter-spacing: -.7px;
+    margin-bottom: 10px;
+}
 
-        .screenshot {
-            width: 100%;
-            display: block;
-            border-radius: 14px;
-            border: 1px solid #315579;
-            background: #10243c;
-        }
+.section-description {
+    color: var(--muted);
+    font-size: 15px;
+}
 
-        .updates {
-            max-width: 800px;
-            margin: auto;
-            background: #0d2138;
-            border: 1px solid #1b3b5c;
-            border-radius: 14px;
-            padding: 25px;
-        }
+/* FEATURES */
 
-        .update-version {
-            color: #62b4ff;
-            font-size: 14px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
+.features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
 
-        .changelog {
-            color: #c1d2e5;
-            white-space: pre-line;
-            overflow-wrap: anywhere;
-            font-size: 15px;
-        }
+.feature {
+    position: relative;
+    padding: 27px 23px;
+    min-height: 205px;
+    border: 1px solid #24476d;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #122b4b, #0a1a31);
+    transition: .25s;
+    overflow: hidden;
+}
 
-        .loading {
-            color: #9eb3cc;
-        }
+.feature:hover {
+    transform: translateY(-6px);
+    border-color: #299dff;
+    box-shadow: 0 12px 35px #007bff19;
+}
 
-        .requirements {
-            max-width: 650px;
-            margin: auto;
-            background: #0d2138;
-            border: 1px solid #1b3b5c;
-            border-radius: 14px;
-            padding: 25px;
-        }
+.feature-icon {
+    width: 49px;
+    height: 49px;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    border-radius: 14px;
+    background: #168bff1d;
+    border: 1px solid #168bff35;
+    margin-bottom: 19px;
+}
 
-        .requirements p {
-            color: #b7c9de;
-            margin: 7px 0;
-        }
+.feature h3 {
+    font-size: 17px;
+    margin-bottom: 9px;
+}
 
-        footer {
-            border-top: 1px solid #183453;
-            padding: 25px 0;
-            text-align: center;
-            color: #7892ae;
-            font-size: 14px;
-        }
+.feature p {
+    font-size: 13px;
+    color: #a9bdd7;
+}
 
-        footer a {
-            color: #55aaff;
-        }
+/* SCREENSHOTS */
 
-        @media (max-width: 600px) {
-            .hero {
-                padding: 65px 0 55px;
-            }
+.screenshots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 23px;
+    align-items: start;
+}
 
-            section {
-                padding: 48px 0;
-            }
+.screenshot-frame {
+    padding: 9px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #1d4d7b, #10213b);
+    border: 1px solid #3678ad66;
+    box-shadow: 0 15px 40px #00000030;
+    transition: .25s;
+}
 
-            .section-title {
-                font-size: 25px;
-            }
+.screenshot-frame:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 45px #087bff25;
+}
 
-            .updates {
-                padding: 18px;
-            }
-        }
-    </style>
+.screenshot {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 13px;
+}
+
+/* UPDATES */
+
+.updates {
+    max-width: 850px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #122b4b, #0b1b32);
+    border: 1px solid #2b5881;
+    box-shadow: 0 15px 45px #00000020;
+}
+
+.update-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+
+.update-label {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.update-version {
+    padding: 6px 12px;
+    border-radius: 30px;
+    background: #168bff20;
+    border: 1px solid #168bff50;
+    color: #72c1ff;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.changelog {
+    color: #c1d2e7;
+    font-size: 14px;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.loading {
+    color: var(--muted);
+}
+
+/* REQUIREMENTS */
+
+.requirements {
+    max-width: 700px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+}
+
+.requirement {
+    padding: 18px;
+    border-radius: 13px;
+    background: #102541;
+    border: 1px solid #24476d;
+    color: #c4d7ec;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: 30px;
+    border-top: 1px solid #ffffff12;
+    padding: 28px 0;
+    text-align: center;
+    color: #86a1c1;
+    font-size: 14px;
+    background: #061124;
+}
+
+footer a {
+    color: #53baff;
+    font-weight: bold;
+    transition: .2s;
+}
+
+footer a:hover {
+    color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .screenshots {
+        gap: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 75px 0 65px;
+    }
+
+    h1 {
+        letter-spacing: -1.2px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    section {
+        padding: 55px 0;
+    }
+
+    .features {
+        grid-template-columns: 1fr 1fr;
+        gap: 11px;
+    }
+
+    .feature {
+        padding: 19px 15px;
+        min-height: 190px;
+    }
+
+    .feature h3 {
+        font-size: 15px;
+    }
+
+    .feature p {
+        font-size: 12px;
+    }
+
+    .screenshots {
+        grid-template-columns: 1fr;
+        max-width: 340px;
+        margin: auto;
+    }
+
+    .requirements {
+        grid-template-columns: 1fr;
+    }
+
+    .updates {
+        padding: 21px;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .buttons {
+        max-width: 330px;
+        margin: auto;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -302,164 +491,178 @@
 
 <main>
 
-    <!-- Главный экран -->
-    <section class="hero">
-        <div class="container">
+<section class="hero">
+    <div class="container hero-content">
 
-            <div class="tag">Приватность и удобство</div>
+        <div class="tag">Приватность и удобство</div>
 
-            <h1>
-                LTSPST <span>Internet Browser</span>
-            </h1>
+        <h1>
+            LTSPST
+            <span>Internet Browser</span>
+        </h1>
 
-            <p class="hero-description">
-                Приватный браузер для Android на базе GeckoView.
-                Создан для комфортного использования интернета
-                с вниманием к конфиденциальности пользователей.
-            </p>
+        <p class="hero-description">
+            Приватный браузер для Android на базе GeckoView.
+            Комфортный интернет, блокировка рекламы
+            и настройки конфиденциальности.
+        </p>
 
-            <div class="buttons">
+        <div class="buttons">
+            <a id="downloadButton"
+               class="button button-primary"
+               href="https://github.com/LTSPST/LTSPST-Internet-Browser/releases"
+               target="_blank"
+               rel="noopener noreferrer">
+                ↓ Скачать APK
+            </a>
 
-                <a id="downloadButton"
-                   class="button button-primary"
-                   href="https://github.com/LTSPST/LTSPST-Internet-Browser/releases"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    ⬇ Скачать APK
-                </a>
-
-                <a class="button button-secondary"
-                   href="https://github.com/LTSPST/LTSPST-Internet-Browser"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Посмотреть GitHub
-                </a>
-
-            </div>
+            <a class="button button-secondary"
+               href="https://github.com/LTSPST/LTSPST-Internet-Browser"
+               target="_blank"
+               rel="noopener noreferrer">
+                Посмотреть GitHub ↗
+            </a>
         </div>
-    </section>
 
-    <!-- Возможности -->
-    <section>
-        <div class="container">
+    </div>
+</section>
 
+<section>
+    <div class="container">
+
+        <div class="section-heading">
             <h2 class="section-title">Возможности браузера</h2>
-
             <p class="section-description">
-                Основные функции LTSPST Internet Browser
+                Всё необходимое для комфортного использования интернета
             </p>
-
-            <div class="features">
-
-                <div class="feature">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Конфиденциальность</h3>
-                    <p>
-                        Настройки приватности позволяют управлять
-                        сохранением пользовательских данных.
-                    </p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">🚫</div>
-                    <h3>Блокировка рекламы</h3>
-                    <p>
-                        Встроенная функция блокировки рекламы.
-                    </p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">🕘</div>
-                    <h3>История</h3>
-                    <p>
-                        Сохранение истории можно включать
-                        и отключать в настройках.
-                    </p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">🌐</div>
-                    <h3>GeckoView</h3>
-                    <p>
-                        Браузер использует движок GeckoView
-                        для отображения веб-страниц.
-                    </p>
-                </div>
-
-            </div>
         </div>
-    </section>
 
-    <!-- Скриншоты -->
-    <section>
-        <div class="container">
+        <div class="features">
 
-            <h2 class="section-title">Скриншоты</h2>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Конфиденциальность</h3>
+                <p>
+                    Настройки приватности и управление
+                    сохранением пользовательских данных.
+                </p>
+            </div>
 
+            <div class="feature">
+                <div class="feature-icon">🚫</div>
+                <h3>Блокировка рекламы</h3>
+                <p>
+                    Встроенная функция блокировки рекламы
+                    для более комфортного просмотра сайтов.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🕘</div>
+                <h3>История</h3>
+                <p>
+                    Управление сохранением истории
+                    посещённых страниц.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🌐</div>
+                <h3>GeckoView</h3>
+                <p>
+                    Современный движок GeckoView
+                    для отображения веб-страниц.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <h2 class="section-title">Интерфейс браузера</h2>
             <p class="section-description">
-                Интерфейс LTSPST Internet Browser
+                Скриншоты LTSPST Internet Browser
             </p>
+        </div>
 
-            <div class="screenshots">
+        <div class="screenshots">
 
+            <div class="screenshot-frame">
                 <img class="screenshot"
                      src="screen1.png"
                      alt="Главный экран LTSPST Internet Browser"
                      loading="lazy">
+            </div>
 
+            <div class="screenshot-frame">
                 <img class="screenshot"
                      src="screen2.png"
                      alt="Интерфейс LTSPST Internet Browser"
                      loading="lazy">
+            </div>
 
+            <div class="screenshot-frame">
                 <img class="screenshot"
                      src="screen3.png"
                      alt="Настройки LTSPST Internet Browser"
                      loading="lazy">
-
             </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Последние изменения -->
-    <section>
-        <div class="container">
+<section>
+    <div class="container">
 
+        <div class="section-heading">
             <h2 class="section-title">Последние изменения</h2>
-
             <p class="section-description">
-                Информация автоматически загружается из update.json
+                Обновления загружаются автоматически
             </p>
+        </div>
 
-            <div class="updates">
+        <div class="updates">
+
+            <div class="update-top">
+                <div class="update-label">Что нового?</div>
 
                 <div id="updateVersion" class="update-version">
-                    Загружаем информацию о версии...
+                    Загрузка версии...
                 </div>
-
-                <div id="changelog" class="changelog loading">
-                    Получение списка изменений...
-                </div>
-
             </div>
+
+            <div id="changelog" class="changelog loading">
+                Получение списка изменений...
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Системные требования -->
-    <section>
-        <div class="container">
+<section>
+    <div class="container">
 
+        <div class="section-heading">
             <h2 class="section-title">Системные требования</h2>
-
-            <div class="requirements">
-
-                <p>📱 Операционная система: Android</p>
-                <p>⚙️ Минимальная версия: Android 8.0 Oreo</p>
-                <p>🌐 Движок: GeckoView</p>
-
-            </div>
+            <p class="section-description">
+                Основная информация о браузере
+            </p>
         </div>
-    </section>
+
+        <div class="requirements">
+            <div class="requirement">📱 Android</div>
+            <div class="requirement">⚙️ Android 8.0 Oreo или новее</div>
+            <div class="requirement">🌐 GeckoView</div>
+            <div class="requirement">💙 Проект LTSPST</div>
+        </div>
+
+    </div>
+</section>
 
 </main>
 
@@ -474,65 +677,62 @@
 </footer>
 
 <script>
-    const UPDATE_JSON_URL =
-        "https://raw.githubusercontent.com/LTSPST/LTSPST-Internet-Browser/main/update.json";
+const UPDATE_JSON_URL =
+    "https://raw.githubusercontent.com/LTSPST/LTSPST-Internet-Browser/main/update.json";
 
-    async function loadUpdates() {
+async function loadUpdates() {
+    const button = document.getElementById("downloadButton");
+    const version = document.getElementById("updateVersion");
+    const changelog = document.getElementById("changelog");
 
-        const button = document.getElementById("downloadButton");
-        const version = document.getElementById("updateVersion");
-        const changelog = document.getElementById("changelog");
+    try {
+        const response = await fetch(
+            UPDATE_JSON_URL + "?t=" + Date.now(),
+            { cache: "no-store" }
+        );
 
-        try {
-
-            const response = await fetch(
-                UPDATE_JSON_URL + "?t=" + Date.now(),
-                { cache: "no-store" }
-            );
-
-            if (!response.ok) {
-                throw new Error("Не удалось загрузить update.json");
-            }
-
-            const data = await response.json();
-
-            if (!data.latest_version || !data.apk_url) {
-                throw new Error("В update.json отсутствуют необходимые данные");
-            }
-
-            button.href = data.apk_url;
-            button.removeAttribute("target");
-            button.textContent = "⬇ Скачать APK";
-
-            version.textContent = "Последняя версия: " + data.latest_version;
-
-            changelog.textContent =
-                data.changelog || "Список изменений пока не опубликован.";
-
-            changelog.classList.remove("loading");
-
-        } catch (error) {
-
-            console.error("Ошибка загрузки обновления:", error);
-
-            version.textContent = "Информация об обновлении недоступна";
-
-            changelog.textContent =
-                "Не удалось загрузить список изменений. Попробуйте позже.";
-
-            changelog.classList.remove("loading");
-
-            button.href =
-                "https://github.com/LTSPST/LTSPST-Internet-Browser/releases";
-
-            button.target = "_blank";
-            button.rel = "noopener noreferrer";
-            button.textContent = "⬇ Открыть GitHub Releases";
-
+        if (!response.ok) {
+            throw new Error("Не удалось загрузить update.json");
         }
-    }
 
-    loadUpdates();
+        const data = await response.json();
+
+        if (!data.latest_version || !data.apk_url) {
+            throw new Error("Некорректный update.json");
+        }
+
+        button.href = data.apk_url;
+        button.removeAttribute("target");
+        button.removeAttribute("rel");
+        button.textContent = "↓ Скачать APK";
+
+        version.textContent = "Версия " + data.latest_version;
+
+        changelog.textContent =
+            data.changelog || "Список изменений пока не опубликован.";
+
+        changelog.classList.remove("loading");
+
+    } catch (error) {
+        console.error("Ошибка обновления:", error);
+
+        version.textContent = "Обновления недоступны";
+
+        changelog.textContent =
+            "Не удалось загрузить информацию об обновлении. Попробуйте позже.";
+
+        changelog.classList.remove("loading");
+
+        button.href =
+            "https://github.com/LTSPST/LTSPST-Internet-Browser/releases";
+
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
+        button.textContent = "↓ Открыть GitHub Releases";
+    }
+}
+
+loadUpdates();
 </script>
 
 </body>
