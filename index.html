@@ -6,12 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>LTSPST Internet Browser — приватный браузер для Android</title>
-
-<meta name="description" content="LTSPST Internet Browser — браузер для Android с GeckoView, блокировкой рекламы и настройками конфиденциальности.">
-<meta name="keywords" content="LTSPST, LTSPST Internet Browser, браузер Android, приватный браузер, GeckoView">
+<meta name="description" content="LTSPST Internet Browser — браузер для Android на базе GeckoView. Блокировка рекламы и настройки конфиденциальности.">
+<meta name="keywords" content="LTSPST, LTSPST Internet Browser, Android браузер, приватный браузер, GeckoView">
 <meta name="author" content="LTSPST">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#071329">
+
 <link rel="canonical" href="https://ltspst.github.io/LTSPST-Internet-Browser/">
 
 <meta property="og:type" content="website">
@@ -44,7 +44,7 @@ html {
 body {
     font-family: Arial, Helvetica, sans-serif;
     background:
-        radial-gradient(ellipse at 50% -20%, #123e70 0%, transparent 50%),
+        radial-gradient(ellipse at 50% -15%, #174b82 0%, transparent 48%),
         var(--bg);
     color: var(--text);
     line-height: 1.6;
@@ -52,8 +52,8 @@ body {
 }
 
 a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
 }
 
 .container {
@@ -64,15 +64,16 @@ a {
 /* HEADER */
 
 header {
-    position: relative;
-    z-index: 5;
+    position: sticky;
+    top: 0;
+    z-index: 10;
     border-bottom: 1px solid #ffffff12;
-    background: #071329d9;
+    background: #071329dc;
     backdrop-filter: blur(18px);
 }
 
 .nav {
-    min-height: 76px;
+    min-height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -114,11 +115,25 @@ header {
     height: 550px;
     background: #087bff;
     filter: blur(170px);
-    opacity: .18;
+    opacity: .2;
     border-radius: 50%;
     top: -280px;
     left: 50%;
     transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    background: #633dff;
+    filter: blur(150px);
+    opacity: .12;
+    border-radius: 50%;
+    bottom: -250px;
+    right: -100px;
     pointer-events: none;
 }
 
@@ -130,7 +145,7 @@ header {
 .tag {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     padding: 8px 17px;
     border: 1px solid #319cff55;
     background: #168bff17;
@@ -221,7 +236,7 @@ section {
 
 .section-heading {
     text-align: center;
-    margin-bottom: 42px;
+    margin-bottom: 38px;
 }
 
 .section-title {
@@ -245,14 +260,12 @@ section {
 }
 
 .feature {
-    position: relative;
-    padding: 27px 23px;
-    min-height: 205px;
+    padding: 25px 21px;
+    min-height: 200px;
     border: 1px solid #24476d;
     border-radius: 18px;
     background: linear-gradient(145deg, #122b4b, #0a1a31);
     transition: .25s;
-    overflow: hidden;
 }
 
 .feature:hover {
@@ -262,20 +275,20 @@ section {
 }
 
 .feature-icon {
-    width: 49px;
-    height: 49px;
+    width: 48px;
+    height: 48px;
     display: grid;
     place-items: center;
-    font-size: 25px;
+    font-size: 24px;
     border-radius: 14px;
     background: #168bff1d;
     border: 1px solid #168bff35;
-    margin-bottom: 19px;
+    margin-bottom: 17px;
 }
 
 .feature h3 {
     font-size: 17px;
-    margin-bottom: 9px;
+    margin-bottom: 8px;
 }
 
 .feature p {
@@ -283,16 +296,109 @@ section {
     color: #a9bdd7;
 }
 
+/* PRIVACY */
+
+.privacy-list {
+    max-width: 760px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.privacy-item {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 19px 21px;
+    border: 1px solid #24476d;
+    border-radius: 15px;
+    background: linear-gradient(110deg, #122b4b, #0b1b32);
+    transition: .2s;
+}
+
+.privacy-item:hover {
+    border-color: #299dff;
+    transform: translateX(4px);
+}
+
+.privacy-icon {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #168bff20;
+    font-size: 22px;
+}
+
+.privacy-text {
+    flex: 1;
+}
+
+.privacy-text h3 {
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.privacy-text p {
+    color: #a9bdd7;
+    font-size: 13px;
+}
+
+.status {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 30px;
+    white-space: nowrap;
+}
+
+.status-on {
+    color: #69d9a2;
+    background: #1b9c6120;
+    border: 1px solid #32b77a50;
+}
+
+.status-off {
+    color: #aabbd1;
+    background: #8295ae18;
+    border: 1px solid #8295ae40;
+}
+
 /* SCREENSHOTS */
 
-.screenshots {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 23px;
-    align-items: start;
+.screenshot-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 4px 22px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #268fe5 #102541;
+}
+
+.screenshot-track::-webkit-scrollbar {
+    height: 7px;
+}
+
+.screenshot-track::-webkit-scrollbar-track {
+    background: #102541;
+    border-radius: 10px;
+}
+
+.screenshot-track::-webkit-scrollbar-thumb {
+    background: #268fe5;
+    border-radius: 10px;
 }
 
 .screenshot-frame {
+    flex: 0 0 245px;
+    scroll-snap-align: start;
     padding: 9px;
     border-radius: 20px;
     background: linear-gradient(145deg, #1d4d7b, #10213b);
@@ -302,7 +408,7 @@ section {
 }
 
 .screenshot-frame:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     box-shadow: 0 18px 45px #087bff25;
 }
 
@@ -311,6 +417,13 @@ section {
     width: 100%;
     height: auto;
     border-radius: 13px;
+}
+
+.screenshot-hint {
+    color: #789fc5;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 12px;
 }
 
 /* UPDATES */
@@ -407,10 +520,6 @@ footer a:hover {
     .features {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .screenshots {
-        gap: 14px;
-    }
 }
 
 @media (max-width: 600px) {
@@ -437,7 +546,7 @@ footer a:hover {
 
     .feature {
         padding: 19px 15px;
-        min-height: 190px;
+        min-height: 185px;
     }
 
     .feature h3 {
@@ -448,10 +557,26 @@ footer a:hover {
         font-size: 12px;
     }
 
-    .screenshots {
-        grid-template-columns: 1fr;
-        max-width: 340px;
-        margin: auto;
+    .screenshot-frame {
+        flex-basis: 215px;
+    }
+
+    .privacy-item {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .privacy-text h3 {
+        font-size: 14px;
+    }
+
+    .privacy-text p {
+        font-size: 12px;
+    }
+
+    .status {
+        font-size: 11px;
+        padding: 4px 8px;
     }
 
     .requirements {
@@ -491,6 +616,8 @@ footer a:hover {
 
 <main>
 
+<!-- ГЛАВНЫЙ ЭКРАН -->
+
 <section class="hero">
     <div class="container hero-content">
 
@@ -508,6 +635,7 @@ footer a:hover {
         </p>
 
         <div class="buttons">
+
             <a id="downloadButton"
                class="button button-primary"
                href="https://github.com/LTSPST/LTSPST-Internet-Browser/releases"
@@ -522,10 +650,12 @@ footer a:hover {
                rel="noopener noreferrer">
                 Посмотреть GitHub ↗
             </a>
-        </div>
 
+        </div>
     </div>
 </section>
+
+<!-- ВОЗМОЖНОСТИ -->
 
 <section>
     <div class="container">
@@ -543,8 +673,8 @@ footer a:hover {
                 <div class="feature-icon">🔒</div>
                 <h3>Конфиденциальность</h3>
                 <p>
-                    Настройки приватности и управление
-                    сохранением пользовательских данных.
+                    Управление настройками приватности
+                    и сохранением данных.
                 </p>
             </div>
 
@@ -552,8 +682,8 @@ footer a:hover {
                 <div class="feature-icon">🚫</div>
                 <h3>Блокировка рекламы</h3>
                 <p>
-                    Встроенная функция блокировки рекламы
-                    для более комфортного просмотра сайтов.
+                    Встроенная блокировка рекламы
+                    для комфортного просмотра сайтов.
                 </p>
             </div>
 
@@ -561,8 +691,8 @@ footer a:hover {
                 <div class="feature-icon">🕘</div>
                 <h3>История</h3>
                 <p>
-                    Управление сохранением истории
-                    посещённых страниц.
+                    Возможность управлять сохранением
+                    истории посещений.
                 </p>
             </div>
 
@@ -570,8 +700,8 @@ footer a:hover {
                 <div class="feature-icon">🌐</div>
                 <h3>GeckoView</h3>
                 <p>
-                    Современный движок GeckoView
-                    для отображения веб-страниц.
+                    Движок GeckoView для отображения
+                    веб-страниц.
                 </p>
             </div>
 
@@ -579,17 +709,73 @@ footer a:hover {
     </div>
 </section>
 
+<!-- ПРИВАТНОСТЬ: СТРОГО ОДИН СТОЛБИК -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <h2 class="section-title">Конфиденциальность</h2>
+            <p class="section-description">
+                Настройки приватности браузера
+            </p>
+        </div>
+
+        <div class="privacy-list">
+
+            <div class="privacy-item">
+                <div class="privacy-icon">🕘</div>
+                <div class="privacy-text">
+                    <h3>История</h3>
+                    <p>Сохранение истории отключено по умолчанию.</p>
+                </div>
+                <span class="status status-off">Выключено</span>
+            </div>
+
+            <div class="privacy-item">
+                <div class="privacy-icon">🚫</div>
+                <div class="privacy-text">
+                    <h3>Блокировка рекламы</h3>
+                    <p>Блокировка рекламы включена по умолчанию.</p>
+                </div>
+                <span class="status status-on">Включено</span>
+            </div>
+
+            <div class="privacy-item">
+                <div class="privacy-icon">🍪</div>
+                <div class="privacy-text">
+                    <h3>Cookies</h3>
+                    <p>Cookies отключены по умолчанию.</p>
+                </div>
+                <span class="status status-off">Выключено</span>
+            </div>
+
+            <div class="privacy-item">
+                <div class="privacy-icon">🔑</div>
+                <div class="privacy-text">
+                    <h3>Сохранение паролей</h3>
+                    <p>Сохранение паролей отключено по умолчанию.</p>
+                </div>
+                <span class="status status-off">Выключено</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- СКРИНШОТЫ: ГОРИЗОНТАЛЬНАЯ ЛЕНТА -->
+
 <section>
     <div class="container">
 
         <div class="section-heading">
             <h2 class="section-title">Интерфейс браузера</h2>
             <p class="section-description">
-                Скриншоты LTSPST Internet Browser
+                Посмотри, как выглядит LTSPST Internet Browser
             </p>
         </div>
 
-        <div class="screenshots">
+        <div class="screenshot-track">
 
             <div class="screenshot-frame">
                 <img class="screenshot"
@@ -613,8 +799,15 @@ footer a:hover {
             </div>
 
         </div>
+
+        <p class="screenshot-hint">
+            ← Листай скриншоты пальцем →
+        </p>
+
     </div>
 </section>
+
+<!-- ПОСЛЕДНИЕ ИЗМЕНЕНИЯ -->
 
 <section>
     <div class="container">
@@ -622,7 +815,7 @@ footer a:hover {
         <div class="section-heading">
             <h2 class="section-title">Последние изменения</h2>
             <p class="section-description">
-                Обновления загружаются автоматически
+                Информация автоматически загружается из update.json
             </p>
         </div>
 
@@ -643,6 +836,8 @@ footer a:hover {
         </div>
     </div>
 </section>
+
+<!-- СИСТЕМНЫЕ ТРЕБОВАНИЯ -->
 
 <section>
     <div class="container">
@@ -681,6 +876,7 @@ const UPDATE_JSON_URL =
     "https://raw.githubusercontent.com/LTSPST/LTSPST-Internet-Browser/main/update.json";
 
 async function loadUpdates() {
+
     const button = document.getElementById("downloadButton");
     const version = document.getElementById("updateVersion");
     const changelog = document.getElementById("changelog");
@@ -714,7 +910,7 @@ async function loadUpdates() {
         changelog.classList.remove("loading");
 
     } catch (error) {
-        console.error("Ошибка обновления:", error);
+        console.error("Ошибка загрузки обновления:", error);
 
         version.textContent = "Обновления недоступны";
 
