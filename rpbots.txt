@@ -1,5 +1,0 @@
-
-User-agent: *
-Allow: /
-
-Sitemap: https://ltspst.github.io/LTSPST-Internet-Browser/sitemap.xml
