@@ -1,1218 +1,304 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>LTSPST Internet Browser</title>
-<meta name="description" content="LTSPST Internet Browser — приватный браузер для Android на базе GeckoView.">
-<meta name="author" content="LTSPST">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#071329">
-
-<link rel="canonical" href="https://ltspst.github.io/LTSPST-Internet-Browser/">
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="LTSPST Internet Browser">
-<meta property="og:description" content="Приватный браузер для Android от LTSPST.">
-<meta property="og:url" content="https://ltspst.github.io/LTSPST-Internet-Browser/">
-<meta property="og:site_name" content="LTSPST">
-<meta property="og:locale" content="ru_RU">
-
-<style>
-:root {
-    --bg: #071329;
-    --panel: #102541;
-    --blue: #168bff;
-    --cyan: #42c6ff;
-    --text: #f2f7ff;
-    --muted: #a6bad5;
-    --glass: rgba(16, 37, 65, 0.72);
-    --glass-border: rgba(66, 198, 255, 0.18);
-    --glow: 0 0 40px rgba(22, 139, 255, 0.25);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(ellipse at 50% 25%, #123e72 0%, transparent 55%),
-        radial-gradient(ellipse at 90% 65%, #102c55 0%, transparent 50%),
-        var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* ТЕХНОЛОГИЧЕСКАЯ СЕТКА ФОНА */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-        linear-gradient(rgba(65, 160, 255, .04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(65, 160, 255, .04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(
-        ellipse at 50% 40%,
-        rgba(0,0,0,.9) 0%,
-        rgba(0,0,0,.4) 60%,
-        transparent 100%
-    );
-    -webkit-mask-image: radial-gradient(
-        ellipse at 50% 40%,
-        rgba(0,0,0,.9) 0%,
-        rgba(0,0,0,.4) 60%,
-        transparent 100%
-    );
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-        circle at 50% 35%,
-        transparent 20%,
-        rgba(1, 8, 22, .45) 100%
-    );
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.container {
-    width: min(1120px, 91%);
-    margin: auto;
-}
-
-/* HEADER */
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    border-bottom: 1px solid var(--glass-border);
-    background: rgba(7, 19, 41, .78);
-    backdrop-filter: blur(24px) saturate(1.4);
-    -webkit-backdrop-filter: blur(24px) saturate(1.4);
-}
-
-.nav {
-    min-height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-size: 21px;
-    font-weight: 900;
-    letter-spacing: -.5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.logo::before {
-    content: "";
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 14px var(--cyan), 0 0 28px rgba(66, 198, 255, 0.4);
-}
-
-.logo span {
-    background: linear-gradient(90deg, var(--cyan), #7ad4ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.github-link {
-    color: #c1d7f2;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    transition: all .3s ease;
-}
-
-.github-link:hover {
-    color: var(--cyan);
-    border-color: var(--glass-border);
-    background: rgba(22, 139, 255, 0.08);
-}
-
-/* HERO */
-
-.hero {
-    position: relative;
-    padding: 110px 0 105px;
-    text-align: center;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 650px;
-    height: 650px;
-    background: #087bff;
-    filter: blur(180px);
-    opacity: .18;
-    border-radius: 50%;
-    top: -320px;
-    left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    animation: pulse-glow 6s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-    0%, 100% { opacity: .18; transform: translateX(-50%) scale(1); }
-    50% { opacity: .26; transform: translateX(-50%) scale(1.08); }
-}
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 20px;
-    border: 1px solid rgba(66, 198, 255, 0.35);
-    background: rgba(22, 139, 255, 0.12);
-    color: #80caff;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 28px;
-    box-shadow: 0 0 30px rgba(22, 139, 255, 0.15), inset 0 0 20px rgba(22, 139, 255, 0.05);
-    backdrop-filter: blur(8px);
-}
-
-.tag::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 12px var(--cyan), 0 0 24px rgba(66, 198, 255, 0.5);
-    animation: blink 2s ease-in-out infinite;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .5; }
-}
-
-h1 {
-    font-size: clamp(38px, 7vw, 68px);
-    line-height: 1.1;
-    font-weight: 900;
-    letter-spacing: -2.5px;
-    margin-bottom: 24px;
-}
-
-h1 span {
-    display: block;
-    background: linear-gradient(90deg, #168bff, #53d5ff, #8ae0ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 0 30px rgba(22, 139, 255, 0.3));
-}
-
-.hero-description {
-    max-width: 650px;
-    margin: 0 auto 38px;
-    color: var(--muted);
-    font-size: 17px;
-    line-height: 1.75;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 14px;
-}
-
-.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 30px;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 800;
-    transition: all .3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    letter-spacing: 0.3px;
-}
-
-.button-primary {
-    color: white;
-    background: linear-gradient(110deg, #0879ed, #20b5ff, #3ec8ff);
-    background-size: 200% 100%;
-    box-shadow: 0 8px 35px rgba(8, 123, 255, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.button-primary::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(110deg, transparent, rgba(255,255,255,0.25), transparent);
-    transform: translateX(-100%);
-    transition: transform .6s ease;
-}
-
-.button-primary:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 40px rgba(8, 123, 255, 0.6), inset 0 1px 0 rgba(255,255,255,0.2);
-}
-
-.button-primary:hover::after {
-    transform: translateX(100%);
-}
-
-.button-secondary {
-    color: #d8eaff;
-    border: 1px solid rgba(66, 198, 255, 0.3);
-    background: rgba(16, 37, 65, 0.8);
-    backdrop-filter: blur(8px);
-    box-shadow: inset 0 0 20px rgba(22, 139, 255, 0.04);
-}
-
-.button-secondary:hover {
-    transform: translateY(-3px);
-    background: rgba(23, 54, 87, 0.9);
-    border-color: rgba(66, 198, 255, 0.6);
-    box-shadow: 0 8px 25px rgba(22, 139, 255, 0.15), inset 0 0 20px rgba(22, 139, 255, 0.08);
-}
-
-/* SECTIONS */
-
-section {
-    padding: 80px 0;
-}
-
-.section-heading {
-    text-align: center;
-    margin-bottom: 45px;
-}
-
-.section-title {
-    font-size: clamp(27px, 4vw, 37px);
-    font-weight: 900;
-    letter-spacing: -.8px;
-    margin-bottom: 12px;
-    background: linear-gradient(180deg, #ffffff, #a6c9f0);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.section-description {
-    color: var(--muted);
-    font-size: 15px;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* ВОЗМОЖНОСТИ — КАРТОЧКИ 2 × 2 */
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-    align-items: stretch;
-}
-
-.feature {
-    position: relative;
-    min-height: 255px;
-    padding: 30px;
-    overflow: hidden;
-    border: 1px solid rgba(66, 198, 255, 0.2);
-    border-radius: 28px;
-    background:
-        linear-gradient(145deg,
-            rgba(26, 65, 111, .75),
-            rgba(10, 27, 52, .92));
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        inset 0 0 30px rgba(40, 135, 255, .04),
-        0 12px 40px rgba(0, 0, 0, .2);
-    transition:
-        transform .35s cubic-bezier(0.22, 0.61, 0.36, 1),
-        border-color .35s ease,
-        box-shadow .35s ease;
-    backdrop-filter: blur(10px);
-}
-
-.feature::before {
-    content: "";
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    right: -100px;
-    top: -110px;
-    border-radius: 50%;
-    background: #168bff;
-    filter: blur(80px);
-    opacity: .15;
-    pointer-events: none;
-    transition: opacity .35s ease;
-}
-
-.feature::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 28px;
-    background: linear-gradient(145deg, rgba(66, 198, 255, 0.06), transparent 50%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .35s ease;
-}
-
-.feature:hover {
-    transform: translateY(-6px);
-    border-color: rgba(66, 198, 255, 0.55);
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        0 0 35px rgba(30, 148, 255, .18),
-        0 20px 50px rgba(0, 0, 0, .3);
-}
-
-.feature:hover::before {
-    opacity: .3;
-}
-
-.feature:hover::after {
-    opacity: 1;
-}
-
-.feature-icon {
-    position: relative;
-    width: 70px;
-    height: 70px;
-    display: grid;
-    place-items: center;
-    font-size: 34px;
-    border-radius: 22px;
-    background: linear-gradient(145deg, #16477a, #102d51);
-    border: 1px solid rgba(66, 198, 255, 0.25);
-    box-shadow:
-        0 0 25px rgba(22, 139, 255, .15),
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        inset 0 0 20px rgba(22, 139, 255, .08);
-    margin-bottom: 26px;
-    transition: transform .35s ease, box-shadow .35s ease;
-}
-
-.feature:hover .feature-icon {
-    transform: scale(1.08) rotate(-3deg);
-    box-shadow:
-        0 0 35px rgba(22, 139, 255, .3),
-        inset 0 1px 0 rgba(255,255,255,0.1),
-        inset 0 0 25px rgba(22, 139, 255, .15);
-}
-
-.feature h3 {
-    position: relative;
-    font-size: 20px;
-    line-height: 1.4;
-    margin-bottom: 14px;
-    letter-spacing: -0.3px;
-}
-
-.feature p {
-    position: relative;
-    font-size: 15px;
-    line-height: 1.75;
-    color: #afc4df;
-}
-
-/* ПРИВАТНОСТЬ */
-
-.privacy-list {
-    max-width: 780px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.privacy-item {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 20px 24px;
-    border: 1px solid rgba(43, 86, 128, 0.8);
-    border-radius: 20px;
-    background: linear-gradient(110deg, rgba(18, 43, 75, 0.85), rgba(11, 27, 50, 0.9));
-    transition: all .3s ease;
-    backdrop-filter: blur(6px);
-}
-
-.privacy-item:hover {
-    border-color: rgba(66, 198, 255, 0.5);
-    box-shadow: 0 0 25px rgba(22, 139, 255, 0.1), inset 0 0 20px rgba(22, 139, 255, 0.04);
-    transform: translateX(4px);
-}
-
-.privacy-icon {
-    width: 50px;
-    height: 50px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 16px;
-    background: rgba(22, 139, 255, 0.12);
-    border: 1px solid rgba(22, 139, 255, 0.25);
-    font-size: 24px;
-    box-shadow: inset 0 0 15px rgba(22, 139, 255, 0.06);
-}
-
-.privacy-text {
-    flex: 1;
-}
-
-.privacy-text h3 {
-    font-size: 16px;
-    margin-bottom: 4px;
-    letter-spacing: -0.2px;
-}
-
-.privacy-text p {
-    color: #a9bdd7;
-    font-size: 13px;
-}
-
-.status {
-    font-size: 12px;
-    font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 30px;
-    white-space: nowrap;
-    letter-spacing: 0.2px;
-}
-
-.status-on {
-    color: #69d9a2;
-    background: rgba(27, 156, 97, 0.14);
-    border: 1px solid rgba(50, 183, 122, 0.35);
-    box-shadow: 0 0 15px rgba(50, 183, 122, 0.1);
-}
-
-.status-off {
-    color: #aabbd1;
-    background: rgba(130, 149, 174, 0.1);
-    border: 1px solid rgba(130, 149, 174, 0.3);
-}
-
-/* СКРИНШОТЫ */
-
-.screenshot-track {
-    display: flex;
-    gap: 22px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 12px 4px 26px;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: 4px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #268fe5 #102541;
-}
-
-.screenshot-track::-webkit-scrollbar {
-    height: 6px;
-}
-
-.screenshot-track::-webkit-scrollbar-track {
-    background: rgba(16, 37, 65, 0.6);
-    border-radius: 10px;
-}
-
-.screenshot-track::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #268fe5, #42c6ff);
-    border-radius: 10px;
-}
-
-.screenshot-frame {
-    flex: 0 0 250px;
-    scroll-snap-align: start;
-    padding: 10px;
-    border-radius: 22px;
-    background: linear-gradient(145deg, #1d4d7b, #10213b);
-    border: 1px solid rgba(54, 120, 173, 0.4);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255,255,255,0.06);
-    transition: all .35s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-.screenshot-frame:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 22px 55px rgba(8, 123, 255, 0.2), inset 0 1px 0 rgba(255,255,255,0.08);
-    border-color: rgba(66, 198, 255, 0.6);
-}
-
-.screenshot {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 14px;
-}
-
-.screenshot-hint {
-    color: #789fc5;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 14px;
-    letter-spacing: 0.5px;
-}
-
-/* ОБНОВЛЕНИЯ */
-
-.updates {
-    max-width: 870px;
-    margin: auto;
-    padding: 34px;
-    border-radius: 28px;
-    background: linear-gradient(145deg, rgba(18, 43, 75, 0.9), rgba(11, 27, 50, 0.95));
-    border: 1px solid rgba(43, 88, 129, 0.7);
-    box-shadow:
-        0 20px 55px rgba(0, 0, 0, .25),
-        inset 0 1px 0 rgba(255,255,255,0.05),
-        inset 0 0 35px rgba(22, 139, 255, 0.04);
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-}
-
-.updates::before {
-    content: "";
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    right: -120px;
-    top: -130px;
-    border-radius: 50%;
-    background: #168bff;
-    filter: blur(90px);
-    opacity: .12;
-    pointer-events: none;
-}
-
-.update-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-    position: relative;
-}
-
-.update-label {
-    font-weight: 900;
-    font-size: 22px;
-    letter-spacing: -0.3px;
-}
-
-.update-version {
-    padding: 8px 18px;
-    border-radius: 30px;
-    background: rgba(22, 139, 255, 0.14);
-    border: 1px solid rgba(22, 139, 255, 0.35);
-    color: #72c1ff;
-    font-size: 14px;
-    font-weight: 700;
-    box-shadow: 0 0 20px rgba(22, 139, 255, 0.1);
-}
-
-.changelog {
-    color: #c1d2e7;
-    font-size: 15px;
-    white-space: pre-line;
-    overflow-wrap: anywhere;
-    line-height: 1.8;
-    position: relative;
-}
-
-.loading {
-    color: var(--muted);
-    animation: shimmer 1.5s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .5; }
-}
-
-/* СИСТЕМНЫЕ ТРЕБОВАНИЯ */
-
-.requirements {
-    max-width: 720px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.requirement {
-    padding: 24px 28px;
-    border-radius: 22px;
-    background: linear-gradient(110deg, rgba(18, 43, 75, 0.85), rgba(11, 27, 50, 0.9));
-    border: 1px solid rgba(43, 86, 128, 0.7);
-    color: #c4d7ec;
-    font-size: 16px;
-    font-weight: 500;
-    box-shadow: inset 0 0 20px rgba(22, 139, 255, 0.04), 0 8px 25px rgba(0, 0, 0, .15);
-    transition: all .3s ease;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.requirement:hover {
-    border-color: rgba(66, 198, 255, 0.45);
-    box-shadow: inset 0 0 20px rgba(22, 139, 255, 0.08), 0 0 25px rgba(22, 139, 255, 0.1);
-    transform: translateX(4px);
-}
-
-/* FOOTER */
-
-footer {
-    margin-top: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 32px 0;
-    text-align: center;
-    color: #86a1c1;
-    font-size: 14px;
-    background: rgba(6, 17, 36, 0.75);
-    backdrop-filter: blur(10px);
-}
-
-footer a {
-    color: #53baff;
-    font-weight: 700;
-    transition: all .25s ease;
-    position: relative;
-}
-
-footer a::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--cyan);
-    transition: width .25s ease;
-}
-
-footer a:hover {
-    color: white;
-}
-
-footer a:hover::after {
-    width: 100%;
-}
-
-/* МОБИЛЬНАЯ ВЕРСИЯ */
-
-@media (max-width: 600px) {
-
-    .hero {
-        padding: 80px 0 70px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LTSPST Internet Browser — Приватный браузер для Android</title>
+  <meta name="description" content="Приватный мобильный браузер на движке Firefox (GeckoView) без слежки и рекламы. Скачать APK для Android.">
+  <meta name="keywords" content="LTSPST, LTSPST Internet Browser, браузер Android, GeckoView, приватный браузер">
+
+  <style>
+    :root {
+      --bg: #120608;
+      --card: #1e0b0e;
+      --card-hover: #2a1114;
+      --border: rgba(255, 80, 80, 0.14);
+      --text: #f9f1f1;
+      --muted: #c9a5a5;
+      --accent1: #ff3b3b;
+      --accent2: #ff6b4a;
     }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ================= АНИМИРОВАННАЯ СЕТКА ================= */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background-image: linear-gradient(rgba(255, 59, 59, 0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 59, 59, 0.09) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: gridColorShift 12s ease-in-out infinite alternate;
+      mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
+    }
+
+    @keyframes gridColorShift {
+      0%   { filter: hue-rotate(0deg)   brightness(1); }
+      50%  { filter: hue-rotate(35deg)  brightness(1.25); }
+      100% { filter: hue-rotate(-25deg) brightness(0.9); }
+    }
+
+    /* ================= СНЕГ ================= */
+    .snow { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+    .snowflake {
+      position: absolute; top: -10px; color: #fff; opacity: 0.85;
+      animation-name: fall, drift; animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: infinite, infinite; animation-direction: normal, alternate;
+      text-shadow: 0 0 6px rgba(255, 200, 200, 0.8);
+    }
+    @keyframes fall { from { transform: translateY(-10px); } to { transform: translateY(105vh); } }
+    @keyframes drift { from { margin-left: -30px; } to { margin-left: 30px; } }
+
+    /* ================= HEADER ================= */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(18, 6, 8, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 12px 24px;
+    }
+    .header-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 900; font-size: 1.2rem; letter-spacing: 0.5px; }
+    .header-logo img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; box-shadow: 0 4px 14px rgba(255, 59, 59, 0.35); }
+    .header-nav { display: flex; gap: 26px; }
+    .header-nav a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.2s; position: relative; }
+    .header-nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--accent1); border-radius: 2px; transition: width 0.25s ease; }
+    .header-nav a:hover { color: var(--text); }
+    .header-nav a:hover::after { width: 100%; }
+
+    .mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.6rem; cursor: pointer; padding: 4px 10px; line-height: 1; border-radius: 8px; transition: background 0.2s; }
+    .mobile-toggle:hover { background: rgba(255, 59, 59, 0.12); }
+
+    .mobile-menu {
+      display: none; flex-direction: column; background: var(--card); position: absolute; top: calc(100% + 8px); right: 16px;
+      min-width: 180px; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6); overflow: hidden; animation: menuIn 0.18s ease;
+    }
+    @keyframes menuIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a { padding: 14px 18px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid var(--border); transition: background 0.2s, color 0.2s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { background: var(--card-hover); color: #ff8a8a; }
+
+    /* ================= КОНТЕНТ ================= */
+    .container { max-width: 720px; width: 100%; margin: 0 auto; padding: 40px 18px; flex: 1; }
+
+    .profile { text-align: center; margin-bottom: 36px; position: relative; }
+    .profile::before {
+      content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      width: 240px; height: 240px; background: radial-gradient(circle, rgba(255, 59, 59, 0.28), rgba(255, 107, 74, 0.12), transparent 70%);
+      z-index: -1; pointer-events: none; animation: pulseGlow 4s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { transform: translateX(-50%) scale(0.95); opacity: 0.8; }
+      100% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+    }
+
+    .avatar {
+      width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; color: #fff;
+      box-shadow: 0 10px 30px rgba(255, 59, 59, 0.45); overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
     h1 {
-        letter-spacing: -1.5px;
+      font-size: 2.1rem; font-weight: 900; letter-spacing: 0.5px; margin-bottom: 8px;
+      background: linear-gradient(90deg, #ff6b4a, #ff3b3b); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
+    .bio { color: var(--muted); font-size: 1rem; max-width: 500px; margin: 0 auto; }
 
-    .hero-description {
-        font-size: 15px;
+    .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 36px; }
+    .social-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 14px;
+      text-decoration: none; font-weight: 700; font-size: 1rem; color: #fff; background: var(--card); border: 1px solid var(--border);
+      transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
+    .social-btn svg { width: 20px; height: 20px; flex-shrink: 0; fill: currentColor; }
+    .social-btn:hover { transform: translateY(-3px); background: var(--card-hover); box-shadow: 0 10px 25px rgba(255, 59, 59, 0.15); }
+    .social-btn.yt { border-color: rgba(255, 0, 51, 0.45); color: #ff6b81; }
+    .social-btn.yt:hover { border-color: #ff0033; }
+    .social-btn.tg { border-color: rgba(38, 165, 228, 0.45); color: #6ec9f5; }
+    .social-btn.tg:hover { border-color: #26a5e4; }
+    .social-btn.ds { border-color: rgba(88, 101, 242, 0.45); color: #8f9bff; }
+    .social-btn.ds:hover { border-color: #5865f2; }
+    .social-btn.gh { border-color: rgba(255, 255, 255, 0.2); color: #e0e0e0; }
+    .social-btn.gh:hover { border-color: #fff; }
 
-    section {
-        padding: 58px 0;
+    .section-title { font-size: 1.15rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 14px; }
+
+    /* ================= НОВОСТИ ================= */
+    .news-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+    .news-card {
+      display: block; text-decoration: none; color: var(--text);
+      background: linear-gradient(145deg, #220d10, #160709); border: 1px solid var(--border);
+      border-radius: 18px; padding: 20px 24px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; position: relative; overflow: hidden;
     }
+    .news-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent1); border-radius: 4px 0 0 4px; }
+    .news-card:hover { transform: translateY(-3px); border-color: var(--accent1); box-shadow: 0 16px 40px rgba(255, 59, 59, 0.2); }
+    .news-date { font-size: 0.8rem; color: #ff8a8a; font-weight: 700; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .news-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+    .news-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 0; }
 
-    .features {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+    /* ================= ПРОЕКТЫ ================= */
+    .project-card {
+      display: block; text-decoration: none; color: var(--text);
+      background: linear-gradient(145deg, #220d10, #160709);
+      border: 1px solid rgba(255, 59, 59, 0.35); border-radius: 20px; padding: 24px; margin-bottom: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
+    .project-card:hover { transform: translateY(-3px); border-color: var(--accent1); box-shadow: 0 16px 40px rgba(255, 59, 59, 0.2); }
+    .project-tag { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 8px; background: rgba(255, 59, 59, 0.15); color: #ff8a8a; margin-bottom: 10px; }
+    .project-card h2 { font-size: 1.4rem; margin-bottom: 8px; }
+    .project-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; }
+    .project-link { display: inline-flex; align-items: center; font-weight: 700; font-size: 0.95rem; color: #ff8a8a; }
 
-    .feature {
-        min-height: 275px;
-        padding: 22px 18px;
-        border-radius: 24px;
+    footer { text-align: center; padding: 24px 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+    footer a { color: #ff8a8a; text-decoration: none; }
+
+    /* ================= МОБИЛЬНАЯ ВЕРСИЯ ================= */
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .mobile-toggle { display: block; }
     }
-
-    .feature-icon {
-        width: 58px;
-        height: 58px;
-        font-size: 28px;
-        margin-bottom: 20px;
-        border-radius: 18px;
-    }
-
-    .feature h3 {
-        font-size: 16px;
-    }
-
-    .feature p {
-        font-size: 13px;
-        line-height: 1.65;
-    }
-
-    .screenshot-frame {
-        flex-basis: 218px;
-    }
-
-    .privacy-item {
-        padding: 16px;
-        gap: 13px;
-    }
-
-    .privacy-text h3 {
-        font-size: 14px;
-    }
-
-    .privacy-text p {
-        font-size: 12px;
-    }
-
-    .status {
-        font-size: 11px;
-        padding: 5px 10px;
-    }
-
-    .requirement {
-        padding: 20px;
-        font-size: 15px;
-    }
-
-    .updates {
-        padding: 24px;
-        border-radius: 24px;
-    }
-
-    .button {
-        width: 100%;
-    }
-
-    .buttons {
-        max-width: 340px;
-        margin: auto;
-    }
-}
-
-@media (max-width: 360px) {
-
-    .feature {
-        padding: 17px 14px;
-        min-height: 260px;
-    }
-
-    .feature h3 {
-        font-size: 14px;
-    }
-
-    .feature p {
-        font-size: 12px;
-    }
-
-    .privacy-item {
-        flex-wrap: wrap;
-    }
-
-    .privacy-text {
-        min-width: 150px;
-    }
-
-    .feature-icon {
-        width: 52px;
-        height: 52px;
-        font-size: 25px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-    }
-}
-</style>
+  </style>
 </head>
-
 <body>
 
-<header>
-    <div class="container nav">
-        <div class="logo">LTSPST <span>Browser</span></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="snow" id="snow" aria-hidden="true"></div>
 
-        <a class="github-link"
-           href="https://github.com/LTSPST/LTSPST-Internet-Browser"
-           target="_blank"
-           rel="noopener noreferrer">
-            GitHub ↗
-        </a>
+  <header class="header">
+    <a href="/" class="header-logo">
+      <img src="logo.png" alt="Логотип LTSPST">
+      LTSPST
+    </a>
+
+    <nav class="header-nav">
+      <a href="https://ltspst.github.io/news">Новости</a>
+      <a href="https://ltspst.github.io/projects">Проекты</a>
+      <a href="#server">Сервер</a>
+    </nav>
+
+    <button class="mobile-toggle" aria-label="Открыть меню" id="burgerBtn">⋮</button>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="https://ltspst.github.io/news">Новости</a>
+      <a href="https://ltspst.github.io/projects">Проекты</a>
+      <a href="server">Сервер</a>
     </div>
-</header>
+  </header>
 
-<main>
-
-<!-- ГЛАВНЫЙ ЭКРАН -->
-
-<section class="hero">
-    <div class="container hero-content">
-
-        <div class="tag">Приватность и удобство</div>
-
-        <h1>
-            LTSPST
-            <span>Internet Browser</span>
-        </h1>
-
-        <p class="hero-description">
-            Приватный браузер для Android на базе GeckoView.
-            Комфортный интернет, блокировка рекламы
-            и настройки конфиденциальности.
-        </p>
-
-        <div class="buttons">
-
-            <a id="downloadButton"
-               class="button button-primary"
-               href="https://github.com/LTSPST/LTSPST-Internet-Browser/releases"
-               target="_blank"
-               rel="noopener noreferrer">
-                ↓ Скачать APK
-            </a>
-
-            <a class="button button-secondary"
-               href="https://github.com/LTSPST/LTSPST-Internet-Browser"
-               target="_blank"
-               rel="noopener noreferrer">
-                Посмотреть GitHub ↗
-            </a>
-
-        </div>
+  <div class="container">
+    <div class="profile">
+      <div class="avatar">
+        <img src="avatar.png" alt="LTSPST" onerror="this.style.display='none'; this.parentElement.textContent='LT';">
+      </div>
+      <h1>LTSPST</h1>
+      <p class="bio">Ютубер и мобильный разработчик. Создаю собственные приложения и браузеры прямо на телефоне без ПК.</p>
     </div>
-</section>
 
-<!-- ВОЗМОЖНОСТИ -->
-
-<section>
-    <div class="container">
-
-        <div class="section-heading">
-            <h2 class="section-title">Возможности браузера</h2>
-            <p class="section-description">
-                Всё необходимое для комфортного использования интернета
-            </p>
-        </div>
-
-        <div class="features">
-
-            <div class="feature">
-                <div class="feature-icon">🔒</div>
-                <h3>Конфиденциальность</h3>
-                <p>
-                    Управление настройками приватности
-                    и сохранением данных.
-                </p>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">🚫</div>
-                <h3>Блокировка рекламы</h3>
-                <p>
-                    Встроенная блокировка рекламы
-                    для комфортного просмотра сайтов.
-                </p>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">🕘</div>
-                <h3>История</h3>
-                <p>
-                    Возможность управлять сохранением
-                    истории посещений.
-                </p>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">🌐</div>
-                <h3>GeckoView</h3>
-                <p>
-                    Движок GeckoView для отображения
-                    веб-страниц.
-                </p>
-            </div>
-
-        </div>
+    <div class="social-grid">
+      <a href="https://youtube.com/@ltspst_official?si=Fn5YTerh1Dp5nvVa" class="social-btn yt" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+        YouTube
+      </a>
+      <a href="https://t.me/LTSPST_official" class="social-btn tg" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.3-1.8.8l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6.4 13.2l-4.9-1.5c-1.1-.3-1.1-1 .2-1.5l19.2-7.4c.9-.3 1.6.2 1.3 1.5z"/></svg>
+        Telegram
+      </a>
+      <a href="https://t.me/LTSPST_servers" class="social-btn tg" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.3-1.8.8l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6.4 13.2l-4.9-1.5c-1.1-.3-1.1-1 .2-1.5l19.2-7.4c.9-.3 1.6.2 1.3 1.5z"/></svg>
+        Сервер TG
+      </a>
+      <a href="https://discord.gg/8HWQ5byA4g" class="social-btn ds" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.2.5a18.3 18.3 0 0 1 4.3 1.5 15.4 15.4 0 0 0-13 0A18.3 18.3 0 0 1 10.8 3.5L10.6 3a19.8 19.8 0 0 0-4.9 1.4C2.6 9 1.8 13.5 2.2 17.9a19.9 19.9 0 0 0 6 3l.5-.8a13 13 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.1 0l.5.4a13 13 0 0 1-2 1l.5.8a19.9 19.9 0 0 0 6-3c.5-5.1-.8-9.6-3.5-13.5zM8.7 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm6.6 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>
+        Discord
+      </a>
+      <a href="https://github.com/LTSPST" class="social-btn gh" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.9 10.9c.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.6.8.5A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+        GitHub
+      </a>
     </div>
-</section>
 
-<!-- ПРИВАТНОСТЬ -->
-
-<section>
-    <div class="container">
-
-        <div class="section-heading">
-            <h2 class="section-title">Конфиденциальность</h2>
-            <p class="section-description">
-                Настройки приватности браузера
-            </p>
-        </div>
-
-        <div class="privacy-list">
-
-            <div class="privacy-item">
-                <div class="privacy-icon">🕘</div>
-                <div class="privacy-text">
-                    <h3>История</h3>
-                    <p>Сохранение истории отключено по умолчанию.</p>
-                </div>
-                <span class="status status-off">Выключено</span>
-            </div>
-
-            <div class="privacy-item">
-                <div class="privacy-icon">🚫</div>
-                <div class="privacy-text">
-                    <h3>Блокировка рекламы</h3>
-                    <p>Блокировка рекламы включена по умолчанию.</p>
-                </div>
-                <span class="status status-on">Включено</span>
-            </div>
-
-            <div class="privacy-item">
-                <div class="privacy-icon">🍪</div>
-                <div class="privacy-text">
-                    <h3>Cookies</h3>
-                    <p>Cookies отключены по умолчанию.</p>
-                </div>
-                <span class="status status-off">Выключено</span>
-            </div>
-
-            <div class="privacy-item">
-                <div class="privacy-icon">🔑</div>
-                <div class="privacy-text">
-                    <h3>Сохранение паролей</h3>
-                    <p>Сохранение паролей отключено по умолчанию.</p>
-                </div>
-                <span class="status status-off">Выключено</span>
-            </div>
-
-        </div>
+    <div class="section-title">Последние новости</div>
+    <div class="news-list">
+      <a href="https://t.me/LTSPST_official" class="news-card" target="_blank" rel="noopener noreferrer">
+        <span class="news-date">24 ноября 2026</span>
+        <h3>Запуск бета-тестирования браузера!</h3>
+        <p>Мы наконец-то открыли доступ к бета-версии LTSPST Internet Browser. Все желающие могут скачать APK и опробовать движок GeckoView прямо сейчас.</p>
+      </a>
+      <a href="https://t.me/LTSPST_servers" class="news-card" target="_blank" rel="noopener noreferrer">
+        <span class="news-date">18 ноября 2026</span>
+        <h3>Обновление сайта и новые разделы</h3>
+        <p>Мы полностью переработали дизайн сайта, добавили страницы с правилами и донатом для сервера Minecraft. Обязательно зацените новый стиль!</p>
+      </a>
+      <a href="https://youtube.com/@ltspst_official" class="news-card" target="_blank" rel="noopener noreferrer">
+        <span class="news-date">10 ноября 2026</span>
+        <h3>Новое видео: Как я пишу код на телефоне</h3>
+        <p>Вышел большой ролик на YouTube, где я рассказываю и показываю свой процесс мобильной разработки без использования ПК. Смотрите на канале.</p>
+      </a>
     </div>
-</section>
 
-<!-- СКРИНШОТЫ -->
+    <div id="programs" class="section-title">Мои проекты</div>
+    <a href="/LTSPST-Internet-Browser/" class="project-card">
+      <div class="project-tag">🔥 Главный проект • Android</div>
+      <h2>LTSPST Internet Browser</h2>
+      <p>Приватный мобильный браузер на движке Firefox (GeckoView) без слежки и рекламы. Разработан полностью на смартфоне.</p>
+      <div class="project-link">Открыть страницу браузера и скачать APK →</div>
+    </a>
+  </div>
 
-<section>
-    <div class="container">
+  <footer>
+    © 2026 LTSPST. Официальный сайт.
+  </footer>
 
-        <div class="section-heading">
-            <h2 class="section-title">Интерфейс браузера</h2>
-            <p class="section-description">
-                Посмотри, как выглядит LTSPST Internet Browser
-            </p>
-        </div>
+  <script>
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
 
-        <div class="screenshot-track">
+    burgerBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      burgerBtn.textContent = mobileMenu.classList.contains('active') ? '✕' : '⋮';
+    });
 
-            <div class="screenshot-frame">
-                <img class="screenshot"
-                     src="screen1.png"
-                     alt="Главный экран браузера"
-                     loading="lazy">
-            </div>
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        burgerBtn.textContent = '⋮';
+      });
+    });
 
-            <div class="screenshot-frame">
-                <img class="screenshot"
-                     src="screen2.png"
-                     alt="Интерфейс браузера"
-                     loading="lazy">
-            </div>
+    (function createSnow() {
+      const snowContainer = document.getElementById('snow');
+      const flakeCount = 60;
 
-            <div class="screenshot-frame">
-                <img class="screenshot"
-                     src="screen3.png"
-                     alt="Настройки браузера"
-                     loading="lazy">
-            </div>
+      for (let i = 0; i < flakeCount; i++) {
+        const flake = document.createElement('span');
+        flake.className = 'snowflake';
+        flake.textContent = Math.random() > 0.5 ? '❄' : '•';
+        const size = Math.random() * 10 + 6;
+        const left = Math.random() * 100;
+        const fallDuration = Math.random() * 8 + 6;
+        const driftDuration = Math.random() * 3 + 2;
+        const delay = Math.random() * -20;
 
-        </div>
+        flake.style.left = left + 'vw';
+        flake.style.fontSize = size + 'px';
+        flake.style.opacity = (Math.random() * 0.5 + 0.4).toFixed(2);
+        flake.style.animationDuration = fallDuration + 's, ' + driftDuration + 's';
+        flake.style.animationDelay = delay + 's, ' + delay + 's';
 
-        <p class="screenshot-hint">
-            ← Листай скриншоты пальцем →
-        </p>
-
-    </div>
-</section>
-
-<!-- ПОСЛЕДНИЕ ИЗМЕНЕНИЯ -->
-
-<section>
-    <div class="container">
-
-        <div class="section-heading">
-            <h2 class="section-title">Последние изменения</h2>
-        </div>
-
-        <div class="updates">
-
-            <div class="update-top">
-                <div class="update-label">Что нового?</div>
-
-                <div id="updateVersion" class="update-version">
-                    Загрузка версии...
-                </div>
-            </div>
-
-            <div id="changelog" class="changelog loading">
-                Получение списка изменений...
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- СИСТЕМНЫЕ ТРЕБОВАНИЯ -->
-
-<section>
-    <div class="container">
-
-        <div class="section-heading">
-            <h2 class="section-title">Системные требования</h2>
-            <p class="section-description">
-                Основная информация о браузере
-            </p>
-        </div>
-
-        <div class="requirements">
-
-            <div class="requirement">📱 Android</div>
-
-            <div class="requirement">
-                ⚙️ Android 8.0 Oreo или новее
-            </div>
-
-            <div class="requirement">🌐 GeckoView</div>
-
-        </div>
-    </div>
-</section>
-
-</main>
-
-<!-- FOOTER -->
-
-<footer>
-    <div class="container">
-        © LTSPST |
-        <a href="https://ltspst.github.io"
-           target="_blank"
-           rel="noopener noreferrer">Проект LTSPST</a>
-        | 2026 год
-    </div>
-</footer>
-
-<script>
-const UPDATE_JSON_URL =
-    "https://raw.githubusercontent.com/LTSPST/LTSPST-Internet-Browser/main/update.json";
-
-async function loadUpdates() {
-
-    const button = document.getElementById("downloadButton");
-    const version = document.getElementById("updateVersion");
-    const changelog = document.getElementById("changelog");
-
-    try {
-        const response = await fetch(
-            UPDATE_JSON_URL + "?t=" + Date.now(),
-            { cache: "no-store" }
-        );
-
-        if (!response.ok) {
-            throw new Error("Не удалось загрузить update.json");
-        }
-
-        const data = await response.json();
-
-        if (!data.latest_version || !data.apk_url) {
-            throw new Error("Некорректный update.json");
-        }
-
-        button.href = data.apk_url;
-        button.removeAttribute("target");
-        button.removeAttribute("rel");
-        button.textContent = "↓ Скачать APK";
-
-        version.textContent = "Версия " + data.latest_version;
-
-        changelog.textContent =
-            data.changelog || "Список изменений пока не опубликован.";
-
-        changelog.classList.remove("loading");
-
-    } catch (error) {
-        console.error("Ошибка обновления:", error);
-
-        version.textContent = "Обновления недоступны";
-
-        changelog.textContent =
-            "Не удалось загрузить информацию об обновлении. Попробуйте позже.";
-
-        changelog.classList.remove("loading");
-
-        button.href =
-            "https://github.com/LTSPST/LTSPST-Internet-Browser/releases";
-
-        button.target = "_blank";
-        button.rel = "noopener noreferrer";
-        button.textContent = "↓ Открыть GitHub Releases";
-    }
-}
-
-loadUpdates();
-</script>
-
+        snowContainer.appendChild(flake);
+      }
+    })();
+  </script>
 </body>
 </html>
