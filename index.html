@@ -128,34 +128,58 @@
     .download-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(47, 123, 255, 0.5); }
     .download-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
-    /* СКРИНЫ */
+    /* ================= СКРИНЫ ================= */
     .screens-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px; margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: nowrap; /* Строго в одну строку */
     }
     .screen-item {
-      border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border); background: #070f1c;
+      flex: 1; /* Растягиваются равномерно */
+      max-width: 180px; /* Ограничение размера, чтобы не были гигантскими */
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #070f1c;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       transition: transform 0.25s, border-color 0.25s;
     }
-    .screen-item:hover { transform: translateY(-5px); border-color: var(--accent1); }
+    .screen-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent1);
+    }
     .screen-item img {
-      display: block; width: 100%; height: auto; aspect-ratio: 9 / 19.5;
-      object-fit: cover; background: #070f1c;
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 9 / 19.5;
+      object-fit: cover;
+      background: #070f1c;
     }
 
-    /* ВЕРСИЯ / CHANGELOG */
+    /* На мобилках чуть уменьшим отступы, но оставим в строку */
+    @media (max-width: 600px) {
+      .screens-grid { gap: 8px; }
+      .screen-item { border-radius: 10px; }
+    }
+
+    /* ================= ВЕРСИЯ / CHANGELOG ================= */
     .version-box {
       background: linear-gradient(145deg, #0b1424, #070f1c);
       border: 1px solid var(--border); border-radius: 18px;
       padding: 24px; margin-bottom: 40px; text-align: left;
     }
-    .version-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .version-head { 
+      display: flex; align-items: center; justify-content: space-between; 
+      flex-wrap: wrap; gap: 8px; margin-bottom: 12px; 
+      border-bottom: 1px solid var(--border); padding-bottom: 12px; 
+    }
     .version-num { font-weight: 800; font-size: 1.15rem; color: var(--accent2); }
     .changelog { color: var(--muted); font-size: 0.95rem; white-space: pre-line; line-height: 1.6; }
 
-    /* ПЛАТФОРМА */
+    /* ================= ПЛАТФОРМА ================= */
     .platform-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 12px; margin-bottom: 40px;
@@ -169,7 +193,7 @@
     .platform-item .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
     .platform-item .value { font-weight: 800; font-size: 1rem; color: var(--text); }
 
-    /* ПЛАВАЮЩАЯ КНОПКА */
+    /* ================= ПЛАВАЮЩАЯ КНОПКА ================= */
     .floating-download {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120px);
       z-index: 200; display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -185,7 +209,6 @@
     .floating-download svg { width: 20px; height: 20px; fill: currentColor; }
 
     footer { text-align: center; padding: 24px 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
-    footer a { color: var(--accent2); text-decoration: none; }
   </style>
 </head>
 <body>
@@ -309,13 +332,9 @@
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
 
-        // Подставляем версию
         versionEl.textContent = data.latest_version || 'Неизвестно';
-        
-        // Подставляем changelog
         changelogEl.textContent = data.changelog || 'Список изменений пуст.';
 
-        // Подставляем ссылки на APK
         if (data.apk_url) {
           mainBtn.href = data.apk_url;
           floatBtn.href = data.apk_url;
@@ -336,7 +355,6 @@
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        // Если главная кнопка НЕ видна на экране — показываем плавающую
         if (!entry.isIntersecting) {
           floatBtn.classList.add('visible');
         } else {
